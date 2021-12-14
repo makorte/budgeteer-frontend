@@ -20,6 +20,9 @@ const Login = (): ReactElement => {
         axios({
             method: "POST",
             url: "/authenticate",
+            headers: {
+              "Content-Type": "application/json; charset=utf-8"
+            },
             data: {
                 username,
                 password
@@ -35,13 +38,13 @@ const Login = (): ReactElement => {
                     alert("Wrong username or password!")
                 } else {
                     clearForm()
-                    alert(err)
+                    alert(err.message)
                 }
             });
     }
 
     return (
-        <div className="Login">
+        <div className="login">
             <h3>Login</h3>
             <form onSubmit={onLogin}>
                 <label htmlFor="username">Username:</label><br/>
