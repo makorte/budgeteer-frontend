@@ -1,10 +1,13 @@
 import React, {FormEvent, useState} from "react";
 import axios from "axios";
+import {Link, useNavigate} from "react-router-dom";
 
 const Register = () => {
     const [username, setUsername] = useState("")
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
+
+    const navigate = useNavigate();
 
     const onRegister = (e:FormEvent): void => {
         e.preventDefault();
@@ -16,9 +19,6 @@ const Register = () => {
         axios({
             method: "POST",
             url: "/register",
-            headers: {
-                "Content-Type": "application/json; charset=utf-8"
-            },
             data: {
                 username,
                 email,
@@ -27,6 +27,8 @@ const Register = () => {
         })
             .then(() => {
                 alert("Successfully registered! Please log in.")
+
+                navigate("/login")
             })
             .catch(err => alert(err.message))
     }
@@ -42,7 +44,9 @@ const Register = () => {
                 <label htmlFor="password">Password:</label><br/>
                 <input type="password" name="password" id="password" onChange={e => setPassword(e.target.value)} value={password}/><br/>
                 <br/>
-                <input type="submit" value="Login"/>
+                <input type="submit" value="Register"/><br/>
+                <br/>
+                <Link to="/login">Login</Link>
             </form>
         </div>
     )

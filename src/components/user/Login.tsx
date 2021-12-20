@@ -1,5 +1,6 @@
 import React, {FormEvent, ReactElement, useState} from "react";
 import axios, {AxiosError} from "axios";
+import {Link} from "react-router-dom";
 
 const Login = (): ReactElement => {
     const [username, setUsername] = useState("")
@@ -20,9 +21,6 @@ const Login = (): ReactElement => {
         axios({
             method: "POST",
             url: "/authenticate",
-            headers: {
-              "Content-Type": "application/json; charset=utf-8"
-            },
             data: {
                 username,
                 password
@@ -54,7 +52,9 @@ const Login = (): ReactElement => {
                 <input type="password" name="password" id="password" onChange={e => setPassword(e.target.value)}
                        value={password}/><br/>
                 <br/>
-                <input type="submit" value="Login"/>
+                <input type="submit" value="Login"/><br/>
+                <br/>
+                <Link to="/register">Register</Link>
             </form>
         </div>
     )
