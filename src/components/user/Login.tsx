@@ -1,15 +1,12 @@
 import React, {FormEvent, ReactElement, useState} from "react";
-import axios, {AxiosError} from "axios";
-import {Link} from "react-router-dom";
+import axios, {AxiosError, AxiosResponse} from "axios";
+import {Link, useNavigate} from "react-router-dom";
 
 const Login = (): ReactElement => {
+    const navigate = useNavigate()
+
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
-
-    const clearForm = (): void => {
-        setUsername("")
-        setPassword("")
-    }
 
     const onLogin = (e: FormEvent): void => {
         e.preventDefault()
@@ -26,16 +23,16 @@ const Login = (): ReactElement => {
                 password
             }
         })
-            .then(res => {
-                localStorage.setItem("api-key", `Bearer ${res.data.accessToken}`)
-                clearForm()
+            .then((res: AxiosResponse) => {
+                const token = res.data.accessToken
+                localStorage.setItem("token", `Bearer ${token}`)
+
+                navigate("/selectProject")
             })
             .catch((err: AxiosError) => {
                 if (err.response?.status === 401) {
-                    clearForm()
                     alert("Wrong username or password!")
                 } else {
-                    clearForm()
                     alert(err.message)
                 }
             });
@@ -46,11 +43,9 @@ const Login = (): ReactElement => {
             <h3>Login</h3>
             <form onSubmit={onLogin}>
                 <label htmlFor="username">Username:</label><br/>
-                <input type="text" name="username" id="username" onChange={e => setUsername(e.target.value)}
-                       value={username}/><br/>
+                <input type="text" name="username" id="username" onChange={e => setUsername(e.target.value)}/><br/>
                 <label htmlFor="password">Password:</label><br/>
-                <input type="password" name="password" id="password" onChange={e => setPassword(e.target.value)}
-                       value={password}/><br/>
+                <input type="password" name="password" id="password" onChange={e => setPassword(e.target.value)}/><br/>
                 <br/>
                 <input type="submit" value="Login"/><br/>
                 <br/>
