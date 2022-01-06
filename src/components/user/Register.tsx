@@ -1,30 +1,22 @@
 import React, {FormEvent, useState} from "react";
-import axios from "axios";
 import {Link, useNavigate} from "react-router-dom";
 
+import register from "../../services/RegisterService";
+import Register from "../../types/Register";
+
 const Register = () => {
-    const [username, setUsername] = useState("")
-    const [email, setEmail] = useState("")
-    const [password, setPassword] = useState("")
+    const [user, setUser] = useState<Register>({username: "", email: "", password: ""})
 
     const navigate = useNavigate();
 
-    const onRegister = (e:FormEvent): void => {
+    const onRegister = (e: FormEvent): void => {
         e.preventDefault();
 
-        if(username === "" || email === "" || password === "") {
+        if (user.username === "" || user.email === "" || user.password === "") {
             alert("Please enter username, email and password!")
         }
 
-        axios({
-            method: "POST",
-            url: "/register",
-            data: {
-                username,
-                email,
-                password
-            }
-        })
+        register(user)
             .then(() => {
                 navigate("/login")
             })
@@ -36,11 +28,14 @@ const Register = () => {
             <h3>Register</h3>
             <form onSubmit={onRegister}>
                 <label htmlFor="username">Username:</label><br/>
-                <input type="text" name="username" id="username" onChange={e => setUsername(e.target.value)}/><br/>
+                <input type="text" name="username" id="username"
+                       onChange={e => setUser({...user, username: e.target.value})}/><br/>
                 <label htmlFor="email">Mail:</label><br/>
-                <input type="email" name="email" id="email" onChange={e => setEmail(e.target.value)}/><br/>
+                <input type="email" name="email" id="email"
+                       onChange={e => setUser({...user, email: e.target.value})}/><br/>
                 <label htmlFor="password">Password:</label><br/>
-                <input type="password" name="password" id="password" onChange={e => setPassword(e.target.value)}/><br/>
+                <input type="password" name="password" id="password"
+                       onChange={e => setUser({...user, password: e.target.value})}/><br/>
                 <br/>
                 <input type="submit" value="Register"/><br/>
                 <br/>

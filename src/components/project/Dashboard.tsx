@@ -1,38 +1,25 @@
 import React, {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
-import axios, {AxiosError, AxiosResponse} from "axios";
+import {AxiosError, AxiosResponse} from "axios";
+
+import getProjectById from "../../services/GetProjectByIdService";
 
 import Project from "../../types/Project";
 
-type DashboardProps = {
-    projectId: String
-}
-
-const Dashboard = ({projectId}: DashboardProps) => {
+const Dashboard = ({projectId}: { projectId: string }) => {
     const navigate = useNavigate()
 
-    const initialState: Project = {
-        id: "",
-        name: ""
-    }
-
-    const [project, setProject] = useState<Project>(initialState)
+    const [project, setProject] = useState<Project>({id: "", name: ""})
 
     useEffect(() => {
-        if(projectId === "") {
+        if (projectId === "") {
             return navigate("/selectProject")
         }
 
-        axios({
-            method: "GET",
-            url: `/projects/${projectId}`,
-            headers: {
-                ["Authorization"]: localStorage.getItem("token") || ""
-            }
-        })
+        getProjectById(projectId)
             .then((res: AxiosResponse) => setProject(res.data))
             .catch((err: AxiosError) => {
-                if(err.response?.status === 401) {
+                if (err.response?.status === 401) {
                     navigate("/login")
                 } else {
                     alert(err.message)
