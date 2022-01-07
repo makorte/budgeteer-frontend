@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {useNavigate} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {AxiosError, AxiosResponse} from "axios";
 
 import getProjectById from "../../services/GetProjectByIdService";
@@ -30,6 +30,7 @@ const Dashboard = ({projectId}: { projectId: string }) => {
     return (
         <div className={"dashboard"}>
             <p>Project: {project.name}</p>
+            <Link to={"/logout"}>Logout</Link>
         </div>
     )
 }
