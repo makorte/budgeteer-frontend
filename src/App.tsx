@@ -1,7 +1,6 @@
 import React, {ReactElement, useState} from 'react';
 import {Route, Routes} from 'react-router-dom'
 
-import Home from "./components/Home";
 import Register from "./components/user/Register";
 import Login from "./components/user/Login";
 import Logout from "./components/user/Logout"
@@ -13,7 +12,7 @@ const App = (): ReactElement => {
 
     return (
         <Routes>
-            <Route path="/" element={<Home/>}/>
+            <Route path="/" element={<SelectProject setCurrentProjectId={setCurrentProjectId}/>}/>
             <Route path="/login" element={<Login/>}/>
             <Route path="/register" element={<Register/>}/>
             <Route path="/logout" element={<Logout/>}/>
