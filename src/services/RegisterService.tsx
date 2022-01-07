@@ -1,6 +1,6 @@
 import http from "../http-common"
-import Register from "../types/Register";
+import RegisterUser from "../types/RegisterUser";
 
-const register = (user: Register) => http.post("/register", user)
+const register = (user: RegisterUser) => http.post("/register", user)
 
 export default register

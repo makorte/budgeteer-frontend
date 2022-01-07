@@ -3,12 +3,12 @@ import {AxiosError, AxiosResponse} from "axios";
 import {Link, useNavigate} from "react-router-dom";
 
 import login from "../../services/LoginService";
-import Login from "../../types/Login";
+import LoginUser from "../../types/LoginUser";
 
 const Login = (): ReactElement => {
     const navigate = useNavigate()
 
-    const [user, setUser] = useState<Login>({username: "", password: ""})
+    const [user, setUser] = useState<LoginUser>({username: "", password: ""})
 
     const onLogin = (e: FormEvent): void => {
         e.preventDefault()

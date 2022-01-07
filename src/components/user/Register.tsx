@@ -2,10 +2,10 @@ import React, {FormEvent, useState} from "react";
 import {Link, useNavigate} from "react-router-dom";
 
 import register from "../../services/RegisterService";
-import Register from "../../types/Register";
+import RegisterUser from "../../types/RegisterUser";
 
 const Register = () => {
-    const [user, setUser] = useState<Register>({username: "", email: "", password: ""})
+    const [user, setUser] = useState<RegisterUser>({username: "", email: "", password: ""})
 
     const navigate = useNavigate();
 
