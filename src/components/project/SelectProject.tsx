@@ -8,12 +8,13 @@ import createProject from "../../services/CreateProjectService";
 import Project from "../../types/Project";
 import CreateProject from "../../types/CreateProject";
 import {useDispatch} from "react-redux";
-import {setCurrentProjectId} from "../../store/actions";
+import getProjectById from "../../services/GetProjectByIdService";
+import {setCurrentProject} from "../../store/actions"
 
 const SelectProject = () => {
+    const [usersProjects, setUsersProjects] = useState<Project[]>([])
     const [project, setProject] = useState<CreateProject>({name: ""})
     const [selectedProjectId, setSelectedProjectId] = useState("");
-    const [usersProjects, setUsersProjects] = useState<Project[]>([])
 
     const dispatch = useDispatch()
     const navigate = useNavigate()
@@ -37,7 +38,7 @@ const SelectProject = () => {
 
         createProject(project)
             .then((res: AxiosResponse) => {
-                dispatch(setCurrentProjectId(res.data.id))
+                dispatch(setCurrentProject(res.data))
                 navigate("/dashboard")
             })
             .catch((err: AxiosError) => {
@@ -56,9 +57,12 @@ const SelectProject = () => {
             return alert("Please select a Project!")
         }
 
-        dispatch(setCurrentProjectId(selectedProjectId))
-
-        navigate("/dashboard")
+        getProjectById(selectedProjectId)
+            .then((res: AxiosResponse) => {
+                dispatch(setCurrentProject(res.data))
+                navigate("/dashboard")
+            })
+            .catch((err: AxiosError) => alert(err))
     }
 
     return (
