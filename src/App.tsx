@@ -1,5 +1,6 @@
-import React, {ReactElement, useState} from 'react';
+import React, {ReactElement} from 'react';
 import {Route, Routes} from 'react-router-dom'
+import {Provider} from "react-redux";
 
 import Register from "./components/user/Register";
 import Login from "./components/user/Login";
@@ -7,18 +8,20 @@ import Logout from "./components/user/Logout"
 import SelectProject from "./components/project/SelectProject";
 import Dashboard from "./components/project/Dashboard";
 
-const App = (): ReactElement => {
-    const [currentProjectId, setCurrentProjectId] = useState("")
+import store from "./store/store"
 
+const App = (): ReactElement => {
     return (
-        <Routes>
-            <Route path="/" element={<SelectProject setCurrentProjectId={setCurrentProjectId}/>}/>
-            <Route path="/login" element={<Login/>}/>
-            <Route path="/register" element={<Register/>}/>
-            <Route path="/logout" element={<Logout/>}/>
-            <Route path="/selectProject" element={<SelectProject setCurrentProjectId={setCurrentProjectId}/>}/>
-            <Route path="/dashboard" element={<Dashboard projectId={currentProjectId}/>}/>
-        </Routes>
+        <Provider store={store}>
+            <Routes>
+                <Route path="/" element={<SelectProject/>}/>
+                <Route path="/login" element={<Login/>}/>
+                <Route path="/register" element={<Register/>}/>
+                <Route path="/logout" element={<Logout/>}/>
+                <Route path="/selectProject" element={<SelectProject/>}/>
+                <Route path="/dashboard" element={<Dashboard/>}/>
+            </Routes>
+        </Provider>
     );
 
 }

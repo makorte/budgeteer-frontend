@@ -5,8 +5,11 @@ import {AxiosError, AxiosResponse} from "axios";
 import getProjectById from "../../services/GetProjectByIdService";
 
 import Project from "../../types/Project";
+import {useSelector} from "react-redux";
+import Store from "../../types/Store";
 
-const Dashboard = ({projectId}: { projectId: string }) => {
+const Dashboard = () => {
+    const projectId = useSelector((state: Store) => state.projectId)
     const navigate = useNavigate()
 
     const [project, setProject] = useState<Project>({id: "", name: ""})
