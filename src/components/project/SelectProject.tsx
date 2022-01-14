@@ -2,13 +2,12 @@ import React, {FormEvent, useEffect, useState} from "react";
 import {AxiosError, AxiosResponse} from "axios";
 import {useNavigate} from "react-router-dom";
 
-import getProjects from "../../services/GetProjectsService";
-import createProject from "../../services/CreateProjectService";
+import {getProjects, getProjectById, createProject} from "../../services/ProjectService";
 
 import Project from "../../types/Project";
 import CreateProject from "../../types/CreateProject";
+
 import {useDispatch} from "react-redux";
-import getProjectById from "../../services/GetProjectByIdService";
 import {setCurrentProject} from "../../store/actions"
 
 const SelectProject = () => {

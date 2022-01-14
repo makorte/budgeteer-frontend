@@ -1,7 +1,7 @@
 import React, {FormEvent, useState} from "react";
 import {Link, useNavigate} from "react-router-dom";
 
-import register from "../../services/RegisterService";
+import {register} from "../../services/UserService";
 import RegisterUser from "../../types/RegisterUser";
 
 const Register = () => {

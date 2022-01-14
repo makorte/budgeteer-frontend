@@ -2,7 +2,8 @@ import React, {FormEvent, ReactElement, useState} from "react";
 import {AxiosError, AxiosResponse} from "axios";
 import {Link, useNavigate} from "react-router-dom";
 
-import login from "../../services/LoginService";
+import {login} from "../../services/UserService";
+
 import LoginUser from "../../types/LoginUser";
 
 const Login = (): ReactElement => {
