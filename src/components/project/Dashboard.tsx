@@ -8,7 +8,7 @@ const Dashboard = () => {
     const navigate = useNavigate()
 
     useEffect(() => {
-        if (project.id === "") {
+        if (project.id === undefined) {
             return navigate("/selectProject")
         }
     }, [navigate, project.id])

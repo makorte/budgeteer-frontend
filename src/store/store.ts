@@ -8,7 +8,7 @@ const setProject = createAction<Project>(SET_CURRENT_PROJECT)
 
 const initialState: Store = {
     project: {
-        id: "",
+        id: undefined,
         name: ""
     }
 }
