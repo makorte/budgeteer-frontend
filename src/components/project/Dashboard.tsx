@@ -2,6 +2,7 @@ import React, {useEffect} from "react";
 import {Link, useNavigate} from "react-router-dom";
 import {useSelector} from "react-redux";
 import Store from "../../types/Store";
+import Header from "../ui/Header";
 
 const Dashboard = () => {
     const project = useSelector((state: Store) => state.project)
@@ -14,9 +15,11 @@ const Dashboard = () => {
     }, [navigate, project.id])
 
     return (
-        <div className={"dashboard"}>
+        <div>
+            <Header/>
+            <h3>Dashboard</h3>
             <p>Project: {project.name}</p>
-            <Link to={"/logout"}>Logout</Link>
+            <Link to={"/contracts"}>Contracts</Link>
         </div>
     )
 }
