@@ -8,11 +8,11 @@ import Project from "../../types/Project";
 import CreateProject from "../../types/CreateProject";
 
 import {useDispatch} from "react-redux";
-import {setCurrentProject} from "../../store/actions"
+import {setProject} from "../../store/projectSlice";
 
 const SelectProject = () => {
     const [usersProjects, setUsersProjects] = useState<Project[]>([])
-    const [project, setProject] = useState<CreateProject>({name: ""})
+    const [createdProject, setCreatedProject] = useState<CreateProject>({name: ""})
     const [selectedProjectId, setSelectedProjectId] = useState("");
 
     const dispatch = useDispatch()
@@ -35,9 +35,9 @@ const SelectProject = () => {
     const onCreateProject = (e: FormEvent) => {
         e.preventDefault()
 
-        createProject(project)
+        createProject(createdProject)
             .then((res: AxiosResponse) => {
-                dispatch(setCurrentProject(res.data))
+                dispatch(setProject(res.data))
                 navigate("/dashboard")
             })
             .catch((err: AxiosError) => {
@@ -58,7 +58,7 @@ const SelectProject = () => {
 
         getProjectById(selectedProjectId)
             .then((res: AxiosResponse) => {
-                dispatch(setCurrentProject(res.data))
+                dispatch(setProject(res.data))
                 navigate("/dashboard")
             })
             .catch((err: AxiosError) => alert(err))
@@ -70,7 +70,7 @@ const SelectProject = () => {
             <form onSubmit={onCreateProject}>
                 <label htmlFor={"projectName"}><h4>Create a new Project</h4></label>
                 <input type={"text"} name={"projectName"} id={"projectName"}
-                       onChange={e => setProject({name: e.target.value})}/>
+                       onChange={e => setCreatedProject({name: e.target.value})}/>
                 <input type={"submit"}/>
             </form>
             <form id={"selectProjectForm"} onSubmit={onSelectProject}>

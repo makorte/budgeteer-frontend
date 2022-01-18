@@ -10,7 +10,7 @@ import Dashboard from "./components/project/Dashboard";
 
 import store from "./store/store"
 
-const App = (): ReactElement => {
+const App = () => {
     return (
         <Provider store={store}>
             <Routes>

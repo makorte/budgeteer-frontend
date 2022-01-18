@@ -1,30 +1,17 @@
-import Store from "../types/Store";
-import {SET_CURRENT_PROJECT} from "./actions";
-import {createStore} from "redux";
-import Project from "../types/Project";
-import {createAction, createReducer} from "@reduxjs/toolkit";
+import {combineReducers, createStore} from "redux";
+import projectSlice from "./projectSlice";
 
-const setProject = createAction<Project>(SET_CURRENT_PROJECT)
-
-const initialState: Store = {
-    project: {
-        id: undefined,
-        name: ""
-    }
-}
-
-const projectReducer = createReducer(initialState, builder => {
-    builder
-        .addCase(setProject, (state, action) => {
-            state.project = action.payload
-        })
+const rootReducer = combineReducers({
+    project: projectSlice
 })
 
-
 const store = createStore(
-    projectReducer,
+    rootReducer,
     //@ts-ignore
     window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-    )
+)
 
 export default store
+
+export type RootStore = ReturnType<typeof store.getState>
+
