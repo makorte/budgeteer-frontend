@@ -7,14 +7,18 @@ type ContractListProps = {
     contracts: Contract[]
 }
 
-const ContractList = ({contracts}: ContractListProps) => {
+const ContractListComponent = ({contracts}: ContractListProps) => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
     const onEdit = (i: number) => {
         dispatch(setContract(contracts[i]))
-
         navigate("/contracts/create")
+    }
+
+    const onSelect = (i: number) => {
+        dispatch(setContract(contracts[i]))
+        navigate("/contracts/details")
     }
 
     return (
@@ -31,19 +35,24 @@ const ContractList = ({contracts}: ContractListProps) => {
                     <th>Budget Spent (net)</th>
                     <th>Budget Left (net)</th>
                     <th/>
+                    <th/>
                 </tr>
                 </thead>
                 <tbody>
                 {contracts.map((contract, index) => (
                     <tr key={index}>
-                        <td>{contract.name}</td>
+                        <td>
+                            <button onClick={() => onSelect(index)}>{contract.name}</button>
+                        </td>
                         <td>{contract.internalNumber}</td>
                         <td>{contract.startDate}</td>
                         <td>{contract.type}</td>
                         <td>{contract.budget.amount}</td>
                         <td>{contract.budgetSpent.amount}</td>
                         <td>{contract.budgetLeft.amount}</td>
-                        <td><button onClick={() => onEdit(index)}>Edit</button></td>
+                        <td>
+                            <button onClick={() => onEdit(index)}>Edit</button>
+                        </td>
                     </tr>
                 ))}
                 </tbody>
@@ -70,4 +79,4 @@ const ContractList = ({contracts}: ContractListProps) => {
     )
 }
 
-export default ContractList
+export default ContractListComponent
