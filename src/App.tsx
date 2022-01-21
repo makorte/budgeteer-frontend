@@ -1,4 +1,4 @@
-import React, {ReactElement} from 'react';
+import React from 'react';
 import {Route, Routes} from 'react-router-dom'
 import {Provider} from "react-redux";
 
@@ -7,6 +7,8 @@ import Login from "./components/user/Login";
 import Logout from "./components/user/Logout"
 import SelectProject from "./components/project/SelectProject";
 import Dashboard from "./components/project/Dashboard";
+import Contracts from "./components/contracts/Contracts";
+import CreateContract from "./components/contracts/CreateContract";
 
 import store from "./store/store"
 
@@ -20,6 +22,8 @@ const App = () => {
                 <Route path="/logout" element={<Logout/>}/>
                 <Route path="/selectProject" element={<SelectProject/>}/>
                 <Route path="/dashboard" element={<Dashboard/>}/>
+                <Route path="/contracts" element={<Contracts/>}/>
+                <Route path="/contracts/create" element={<CreateContract/>}/>
             </Routes>
         </Provider>
     );
