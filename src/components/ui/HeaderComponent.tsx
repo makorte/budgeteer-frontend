@@ -1,6 +1,6 @@
 import {Link} from "react-router-dom";
 
-const Header = () => {
+const HeaderComponent = () => {
     return (
         <div>
             <Link to={"/dashboard"}><b>Budgeteer</b></Link>
@@ -10,4 +10,4 @@ const Header = () => {
     )
 }
 
-export default Header
+export default HeaderComponent

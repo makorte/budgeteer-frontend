@@ -1,63 +1,50 @@
-import {TIME_AND_MATERIAL, FIXED_PRICE} from "../../types/Contract";
+import {FIXED_PRICE, TIME_AND_MATERIAL} from "../../types/Contract";
 import {FormEvent, useEffect, useState} from "react";
-import CreateContractType from "../../types/CreateContractType";
-import {useDispatch, useSelector} from "react-redux";
+import CreateContract from "../../types/CreateContract";
+import {useSelector} from "react-redux";
 import {Link, useNavigate} from "react-router-dom";
 import {AxiosError} from "axios";
 import {RootStore} from "../../store/store";
-import {setContract} from "../../store/contractSlice";
-import {initialState} from "../../store/contractSlice";
 import {createContract, updateContract} from "../../services/ContractService";
 
-const CreateContract = () => {
+const CreateContractPage = () => {
     const currentContract = useSelector((state: RootStore) => state.contract.contract)
     const projectId = useSelector((state: RootStore) => state.project.project.id)
-    const dispatch = useDispatch()
-    const navigate = useNavigate()
-
-    const [createdContract, setCreatedContract] = useState<CreateContractType>({
-        budget: {amount: "", currencyCode: "EUR"},
+    const [createdContract, setCreatedContract] = useState<CreateContract>({
+        budget: {amount: "0", currencyCode: "EUR"},
         internalNumber: "",
         name: "",
         startDate: "",
-        taxRate: undefined,
-        type: undefined
+        taxRate: 0,
+        type: TIME_AND_MATERIAL
     })
 
-    useEffect(() => {
-        if(!projectId) {
-            navigate("/selectProject")
-        }
+    const navigate = useNavigate()
 
-        if (currentContract.id) {
+    useEffect(() => {
+        if (!projectId) {
+            navigate("/selectProject")
+        } else if (currentContract.id) {
             setCreatedContract(currentContract)
         }
-
-        return () => {
-            dispatch(setContract(initialState.contract))
-        }
-    }, [currentContract, dispatch, navigate, projectId])
+    }, [currentContract, navigate, projectId])
 
     const onCreateContract = (e: FormEvent) => {
         e.preventDefault()
 
         if (!projectId) {
             navigate("/selectProject")
-        }
-
-        if (createdContract.type === "" || createdContract.type === undefined) {
-            return alert("Please select type!")
-        }
-
-        if(currentContract.id) {
-            return updateContract(currentContract.id, createdContract)
+        } else if (createdContract.type === "" || createdContract.type === undefined) {
+            alert("Please select type!")
+        } else if (currentContract.id) {
+            updateContract(currentContract.id, createdContract)
+                .then(() => navigate("/contracts"))
+                .catch((err: AxiosError) => alert(err.message))
+        } else {
+            createContract(projectId!, createdContract)
                 .then(() => navigate("/contracts"))
                 .catch((err: AxiosError) => alert(err.message))
         }
-
-        createContract(projectId!, createdContract)
-            .then(() => navigate("/contracts"))
-            .catch((err: AxiosError) => alert(err.message))
     }
 
     return (
@@ -81,13 +68,15 @@ const CreateContract = () => {
                 <select name={"type"} id={"type"}
                         onChange={e => setCreatedContract({...createdContract, type: e.target.value})}
                         value={createdContract.type}>
-                    <option value={""}/>
                     <option value={TIME_AND_MATERIAL}>Time and material</option>
                     <option value={FIXED_PRICE}>Fixed price</option>
                 </select><br/>
                 <label htmlFor={"budget"}>Budget amount (net)</label><br/>
                 <input type={"number"} name={"budget"} id={"budget"} onChange={e => {
-                    setCreatedContract({...createdContract, budget: {...createdContract.budget, amount: e.target.value}})
+                    setCreatedContract({
+                        ...createdContract,
+                        budget: {...createdContract.budget, amount: e.target.value}
+                    })
                 }} value={createdContract.budget.amount}/><br/>
                 <label htmlFor={"taxRate"}>Tax Rate</label><br/>
                 <input type={"number"} name={"taxRate"} id={"taxRate"}
@@ -100,4 +89,4 @@ const CreateContract = () => {
     )
 }
 
-export default CreateContract
+export default CreateContractPage

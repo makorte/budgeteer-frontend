@@ -1,13 +1,13 @@
 import React, {useEffect} from "react";
 
-const Logout = () => {
+const LogoutPage = () => {
     useEffect(() => localStorage.removeItem("token"), [])
 
     return (
-        <div className={"Logout"}>
+        <div>
             <p>Du wurdest ausgeloggt</p>
         </div>
     )
 }
 
-export default Logout
+export default LogoutPage

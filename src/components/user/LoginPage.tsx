@@ -6,35 +6,34 @@ import {login} from "../../services/UserService";
 
 import LoginUser from "../../types/LoginUser";
 
-const Login = (): ReactElement => {
-    const navigate = useNavigate()
-
+const LoginPage = (): ReactElement => {
     const [user, setUser] = useState<LoginUser>({username: "", password: ""})
+
+    const navigate = useNavigate()
 
     const onLogin = (e: FormEvent): void => {
         e.preventDefault()
 
         if (user.username === "" || user.password === "") {
-            return alert("Please enter a username and password!")
+            alert("Please enter a username and password!")
+        } else {
+            login(user)
+                .then((res: AxiosResponse) => {
+                    localStorage.setItem("token", `Bearer ${res.data.accessToken}`)
+                    navigate("/selectProject")
+                })
+                .catch((err: AxiosError) => {
+                    if (err.response?.status === 401) {
+                        alert("Wrong username or password!")
+                    } else {
+                        alert(err.message)
+                    }
+                });
         }
-
-        login(user)
-            .then((res: AxiosResponse) => {
-                localStorage.setItem("token", `Bearer ${res.data.accessToken}`)
-
-                navigate("/selectProject")
-            })
-            .catch((err: AxiosError) => {
-                if (err.response?.status === 401) {
-                    alert("Wrong username or password!")
-                } else {
-                    alert(err.message)
-                }
-            });
     }
 
     return (
-        <div className="login">
+        <div>
             <h3>Login</h3>
             <form onSubmit={onLogin}>
                 <label htmlFor="username">Username:</label><br/>
@@ -52,4 +51,4 @@ const Login = (): ReactElement => {
     )
 }
 
-export default Login;
+export default LoginPage;

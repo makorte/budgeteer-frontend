@@ -4,7 +4,7 @@ import {Link, useNavigate} from "react-router-dom";
 import {register} from "../../services/UserService";
 import RegisterUser from "../../types/RegisterUser";
 
-const Register = () => {
+const RegisterPage = () => {
     const [user, setUser] = useState<RegisterUser>({username: "", email: "", password: ""})
 
     const navigate = useNavigate();
@@ -14,13 +14,13 @@ const Register = () => {
 
         if (user.username === "" || user.email === "" || user.password === "") {
             alert("Please enter username, email and password!")
+        } else {
+            register(user)
+                .then(() => {
+                    navigate("/login")
+                })
+                .catch(err => alert(err.message))
         }
-
-        register(user)
-            .then(() => {
-                navigate("/login")
-            })
-            .catch(err => alert(err.message))
     }
 
     return (
@@ -45,4 +45,4 @@ const Register = () => {
     )
 }
 
-export default Register
+export default RegisterPage

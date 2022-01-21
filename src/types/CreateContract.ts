@@ -1,6 +1,6 @@
 import {FIXED_PRICE, TIME_AND_MATERIAL} from "./Contract";
 
-export default interface CreateContractType {
+export default interface CreateContract {
     internalNumber: string
     name: string
     type: string | typeof TIME_AND_MATERIAL | typeof FIXED_PRICE | undefined

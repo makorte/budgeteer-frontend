@@ -10,7 +10,7 @@ import CreateProject from "../../types/CreateProject";
 import {useDispatch} from "react-redux";
 import {setProject} from "../../store/projectSlice";
 
-const SelectProject = () => {
+const SelectProjectPage = () => {
     const [usersProjects, setUsersProjects] = useState<Project[]>([])
     const [createdProject, setCreatedProject] = useState<CreateProject>({name: ""})
     const [selectedProjectId, setSelectedProjectId] = useState("");
@@ -18,7 +18,7 @@ const SelectProject = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
-    const fetchUsersProjects = () => {
+    useEffect(() => {
         getProjects()
             .then((res: AxiosResponse) => setUsersProjects(res.data))
             .catch((err: AxiosError) => {
@@ -28,9 +28,7 @@ const SelectProject = () => {
                     alert(err.message)
                 }
             })
-    }
-
-    useEffect(fetchUsersProjects, [navigate])
+    }, [navigate])
 
     const onCreateProject = (e: FormEvent) => {
         e.preventDefault()
@@ -53,15 +51,21 @@ const SelectProject = () => {
         e.preventDefault()
 
         if (selectedProjectId === "") {
-            return alert("Please select a Project!")
+            alert("Please select a Project!")
+        } else {
+            getProjectById(selectedProjectId)
+                .then((res: AxiosResponse) => {
+                    dispatch(setProject(res.data))
+                    navigate("/dashboard")
+                })
+                .catch((err: AxiosError) => {
+                    if (err.response?.status === 401) {
+                        navigate("/login")
+                    } else {
+                        alert(err.message)
+                    }
+                })
         }
-
-        getProjectById(selectedProjectId)
-            .then((res: AxiosResponse) => {
-                dispatch(setProject(res.data))
-                navigate("/dashboard")
-            })
-            .catch((err: AxiosError) => alert(err))
     }
 
     return (
@@ -77,7 +81,7 @@ const SelectProject = () => {
                 <label htmlFor={"selectProject"}><h4>Select existing Project</h4></label>
                 <select name={"selectProject"} id={"selectProject"} form={"selectProjectForm"} value={selectedProjectId}
                         onChange={e => setSelectedProjectId(e.target.value)}>
-                    <option value={""}/>
+                    <option value={""}>Select project</option>
                     {usersProjects.map(project => <option key={project.id} value={project.id}>{project.name}</option>)}
                 </select>
                 <input type={"submit"}/>
@@ -86,4 +90,4 @@ const SelectProject = () => {
     )
 }
 
-export default SelectProject
+export default SelectProjectPage
