@@ -14,6 +14,8 @@ import store from "./store/store"
 import ContractDetailsPage from "./components/contracts/ContractDetailsPage";
 import ReactDOM from "react-dom";
 
+import "./index.css"
+
 ReactDOM.render(
     <React.StrictMode>
         <Provider store={store}>
