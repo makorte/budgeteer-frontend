@@ -5,7 +5,7 @@ const HeaderComponent = () => {
         <div>
             <Link to={"/dashboard"}><b>Budgeteer</b></Link>
             <Link to={"/selectProject"}>Switch Project</Link>
-            <Link to={"/logout"}>Sign Out</Link>
+            <Link to={"/login"}>Sign Out</Link>
         </div>
     )
 }

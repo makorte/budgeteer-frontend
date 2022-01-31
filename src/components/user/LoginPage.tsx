@@ -11,8 +11,7 @@ const LoginPage = (): ReactElement => {
 
     const navigate = useNavigate()
 
-    const onLogin = (e: FormEvent): void => {
-        e.preventDefault()
+    useEffect(() => localStorage.removeItem("token"), [])
 
         if (user.username === "" || user.password === "") {
             alert("Please enter a username and password!")
