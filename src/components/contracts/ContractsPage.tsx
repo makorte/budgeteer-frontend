@@ -1,6 +1,6 @@
 import {useEffect, useState} from "react";
 import Contract from "../../types/Contract";
-import HeaderComponent from "../ui/HeaderComponent";
+import HeaderComponent, {CONTRACTS} from "../ui/HeaderComponent";
 import {useDispatch, useSelector} from "react-redux";
 import {Link, useNavigate} from "react-router-dom";
 import {getContracts} from "../../services/ContractService";
@@ -35,13 +35,16 @@ const ContractsPage = () => {
     }, [navigate, projectId, dispatch])
 
     return (
-        <div>
-            <HeaderComponent/>
-            <h3>Contracts</h3>
-            <ContractListComponent contracts={contracts}/>
-            <div>
-                <h4>Options</h4>
-                <Link to={"/contracts/create"}>Create Contract</Link>
+        <div className={"w-full h-full"}>
+            <HeaderComponent active={CONTRACTS}/>
+            <div className={"c-header"}>
+                <h3>Contracts</h3>
+            </div>
+            <div className={"c-flex-middle p-4"}>
+                <ContractListComponent contracts={contracts} setContracts={setContracts}/>
+            </div>
+            <div className={"c-flex-middle"}>
+                <Link to={"/contracts/create"} className={"c-button mb-5"}>Create Contract</Link>
             </div>
         </div>
     )

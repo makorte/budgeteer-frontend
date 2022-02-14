@@ -9,7 +9,7 @@ export default interface CreateContract {
         currencyCode: string
         amount: string
     }
-    taxRate: number | undefined
+    taxRate: string
 
     // TODO include attributes and attachment
 }

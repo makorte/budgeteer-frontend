@@ -1,5 +1,5 @@
 import React, {useEffect} from "react";
-import {Link, useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import {useSelector} from "react-redux";
 import HeaderComponent from "../ui/HeaderComponent";
 import {RootStore} from "../../store/store";
@@ -16,13 +16,12 @@ const DashboardPage = () => {
     }, [navigate, project.id])
 
     return (
-        <div>
+        <div className={"w-full"}>
             <HeaderComponent/>
-            <h3>Dashboard</h3>
-            <p>Project: {project.name}</p>
-            <div>
-                <Link to={"/contracts"}>Contracts</Link>
+            <div className={"c-header"}>
+                <h3>Dashboard</h3>
             </div>
+            <p className={"m-4 text-lg font-semibold"}>Welcome to <b className={"font-extrabold"}>{project.name}</b>!</p>
         </div>
     )
 }

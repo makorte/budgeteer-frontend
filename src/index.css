@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-.bg-global {
+.c-bg-global {
     min-height: 100vh;
     background-color: #f5f5f5;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='70' height='46' viewBox='0 0 70 46'%3E%3Cg fill-rule='evenodd'%3E%3Cg fill='%23848484' fill-opacity='0.08'%3E%3Cpolygon points='68 44 62 44 62 46 56 46 56 44 52 44 52 46 46 46 46 44 40 44 40 46 38 46 38 44 32 44 32 46 26 46 26 44 22 44 22 46 16 46 16 44 12 44 12 46 6 46 6 44 0 44 0 42 8 42 8 28 6 28 6 0 12 0 12 28 10 28 10 42 18 42 18 28 16 28 16 0 22 0 22 28 20 28 20 42 28 42 28 28 26 28 26 0 32 0 32 28 30 28 30 42 38 42 38 0 40 0 40 42 48 42 48 28 46 28 46 0 52 0 52 28 50 28 50 42 58 42 58 28 56 28 56 0 62 0 62 28 60 28 60 42 68 42 68 0 70 0 70 46 68 46'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
@@ -10,7 +10,71 @@
 
 #root {
     display: flex;
-    align-items: center;
+    align-items: start;
     justify-content: center;
     width: 100vw;
+    height: 100vh;
+}
+
+
+@layer components {
+    .c-flex-middle {
+        @apply flex align-middle justify-center
+    }
+
+    .c-flex-col {
+        @apply flex flex-col
+    }
+
+    .c-form-container {
+        @apply p-5 flex flex-col align-middle justify-center
+    }
+
+    .c-form-heading {
+        @apply font-bold text-3xl
+    }
+
+    .c-form-sm {
+        @apply flex flex-col align-middle justify-center bg-white py-6 px-10 rounded-md drop-shadow-md
+    }
+
+    .c-button {
+        @apply shadow-md text-sm py-2 px-4 font-medium rounded-md text-white cursor-pointer bg-emerald-600 hover:bg-emerald-700 focus:bg-emerald-800
+    }
+
+    .c-link {
+        @apply drop-shadow-sm text-sm font-medium text-indigo-700 hover:text-indigo-900
+    }
+
+    .c-label {
+        @apply mb-1 text-sm font-medium text-gray-700
+    }
+
+    .c-input {
+        @apply w-full focus:border-emerald-500 focus:ring-emerald-500 sm:text-sm border-gray-400 rounded-md
+    }
+
+    .c-input-error {
+        @apply text-sm text-red-600
+    }
+
+    .c-nav-item {
+        @apply c-flex-middle text-white hover:bg-emerald-500 px-3 py-2 rounded-md text-sm font-medium cursor-pointer space-x-2 items-center focus:bg-emerald-900
+    }
+
+    .c-header {
+        @apply text-3xl font-semibold bg-white p-5 shadow
+    }
+
+    .c-td-wrapper {
+        @apply px-6 py-4 whitespace-nowrap
+    }
+
+    .c-td-inner {
+        @apply text-sm text-gray-900
+    }
+
+    .c-table-head-item {
+        @apply px-6 py-3 text-left text-sm font-medium text-white uppercase tracking-wider
+    }
 }

@@ -15,19 +15,24 @@ const CreateContractPage = () => {
         internalNumber: "",
         name: "",
         startDate: "",
-        taxRate: 0,
+        taxRate: "0",
         type: TIME_AND_MATERIAL
     })
 
     const navigate = useNavigate()
 
     useEffect(() => {
-        if (!projectId) {
-            navigate("/selectProject")
-        } else if (currentContract.id) {
-            setCreatedContract(currentContract)
+        if (currentContract.id) {
+            setCreatedContract({
+                budget: currentContract.budget,
+                internalNumber: currentContract.internalNumber,
+                name: currentContract.name,
+                startDate: currentContract.startDate,
+                taxRate: currentContract.taxRate!.toString(),
+                type: currentContract.type
+            })
         }
-    }, [currentContract, navigate, projectId])
+    }, [currentContract])
 
     const onCreateContract = (e: FormEvent) => {
         e.preventDefault()
@@ -39,11 +44,23 @@ const CreateContractPage = () => {
         } else if (currentContract.id) {
             updateContract(currentContract.id, createdContract)
                 .then(() => navigate("/contracts"))
-                .catch((err: AxiosError) => alert(err.message))
+                .catch((err: AxiosError) => {
+                    if (err.response?.status === 401) {
+                        navigate("/login")
+                    } else {
+                        alert(err.message)
+                    }
+                })
         } else {
             createContract(projectId!, createdContract)
                 .then(() => navigate("/contracts"))
-                .catch((err: AxiosError) => alert(err.message))
+                .catch((err: AxiosError) => {
+                    if (err.response?.status === 401) {
+                        navigate("/login")
+                    } else {
+                        alert(err.message)
+                    }
+                })
         }
     }
 
@@ -53,35 +70,27 @@ const CreateContractPage = () => {
             <h3>Create Contract</h3>
             <form onSubmit={onCreateContract}>
                 <label htmlFor={"name"}>Name</label><br/>
-                <input type={"text"} name={"name"} id={"name"}
-                       onChange={e => setCreatedContract({...createdContract, name: e.target.value})}
-                       value={createdContract.name}/><br/>
+                <input type={"text"} id={"name"}
+                       onChange={e => setCreatedContract({...createdContract, name: e.target.value})} value={createdContract.name}/><br/>
                 <label htmlFor={"internalNumber"}>Id</label><br/>
-                <input type={"text"} name={"internalNumber"} id={"internalNumber"}
-                       onChange={e => setCreatedContract({...createdContract, internalNumber: e.target.value})}
-                       value={createdContract.internalNumber}/><br/>
+                <input type={"text"} id={"internalNumber"}
+                       onChange={e => setCreatedContract({...createdContract, internalNumber: e.target.value})} value={createdContract.internalNumber}/><br/>
                 <label htmlFor={"startDate"}>Start date</label><br/>
-                <input type={"date"} name={"startDate"} id={"startDate"}
-                       onChange={e => setCreatedContract({...createdContract, startDate: e.target.value})}
-                       value={createdContract.startDate}/><br/>
+                <input type={"date"} id={"startDate"}
+                       onChange={e => setCreatedContract({...createdContract, startDate: e.target.value})} value={createdContract.startDate}/><br/>
                 <label htmlFor={"type"}>Type</label><br/>
-                <select name={"type"} id={"type"}
-                        onChange={e => setCreatedContract({...createdContract, type: e.target.value})}
-                        value={createdContract.type}>
-                    <option value={TIME_AND_MATERIAL}>Time and material</option>
-                    <option value={FIXED_PRICE}>Fixed price</option>
+                <select id={"type"} onChange={e => setCreatedContract({...createdContract, type: e.target.value})} value={createdContract.type}>
+                    <option>{TIME_AND_MATERIAL}</option>
+                    <option>{FIXED_PRICE}</option>
                 </select><br/>
                 <label htmlFor={"budget"}>Budget amount (net)</label><br/>
-                <input type={"number"} name={"budget"} id={"budget"} onChange={e => {
-                    setCreatedContract({
-                        ...createdContract,
-                        budget: {...createdContract.budget, amount: e.target.value}
-                    })
-                }} value={createdContract.budget.amount}/><br/>
+                <input type={"text"} id={"budget"} onChange={e => setCreatedContract({
+                    ...createdContract,
+                    budget: {amount: e.target.value, currencyCode: "EUR"}
+                })} value={createdContract.budget.amount}/><br/>
                 <label htmlFor={"taxRate"}>Tax Rate</label><br/>
-                <input type={"number"} name={"taxRate"} id={"taxRate"}
-                       onChange={e => setCreatedContract({...createdContract, taxRate: parseInt(e.target.value)})}
-                       value={createdContract.taxRate}/><br/>
+                <input type={"text"} id={"taxRate"}
+                       onChange={e => setCreatedContract({...createdContract, taxRate: e.target.value})} value={createdContract.taxRate}/><br/>
                 <br/>
                 <input type={"submit"} value={"Save"}/>
             </form>
