@@ -1,6 +1,6 @@
 import {Link, useNavigate} from "react-router-dom";
 import {useDispatch} from "react-redux";
-import {setLoggedOut} from "../../store/LoginInfosSlice";
+import {setLoggedOut} from "../../store/loginInfosSlice";
 
 export const CONTRACTS = "contracts"
 
@@ -34,7 +34,7 @@ const HeaderComponent = ({active}: Props) => {
                           className={"text-2xl text-white hover:text-gray-200"}>Budgeteer</Link>
                 </div>
                 <div className={"flex flex-row flex-grow align-middle justify-center items-center"}>
-                    <div className={`c-nav-item space-x-1 ${active == CONTRACTS && "bg-emerald-500 hover:text-gray-200"}`}>
+                    <div className={`c-nav-item space-x-1 ${active === CONTRACTS && "bg-emerald-500 hover:text-gray-200"}`}>
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24"
                              stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
