@@ -13,7 +13,7 @@ const HeaderComponent = () => {
     }
 
     return (
-        <Navbar collapseOnSelect expand={"lg"} bg={"primary"} variant={"dark"}>
+        <Navbar collapseOnSelect expand={"lg"} bg={"primary"} variant={"dark"} className={"shadow"}>
             <Container>
                 <Navbar.Brand as={Link} to={"/dashboard"}>Budgeteer</Navbar.Brand>
                 <Navbar.Toggle aria-controls="responsive-navbar-nav"/>
