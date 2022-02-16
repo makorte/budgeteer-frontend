@@ -16,12 +16,12 @@ const DashboardPage = () => {
     }, [navigate, project.id])
 
     return (
-        <div className={"w-full"}>
+        <div>
             <HeaderComponent/>
-            <div className={"c-header"}>
+            <div className={"bg-white p-3 shadow"}>
                 <h3>Dashboard</h3>
             </div>
-            <p className={"m-4 text-lg font-semibold"}>Welcome to <b className={"font-extrabold"}>{project.name}</b>!</p>
+            <p className={"m-3 fs-5"}>Welcome to <b className={"font-extrabold"}>{project.name}</b>!</p>
         </div>
     )
 }

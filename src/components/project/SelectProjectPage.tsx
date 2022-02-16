@@ -105,7 +105,7 @@ const SelectProjectPage = () => {
                 <p className={"text-danger"}>{errors.name?.message}</p>
             </Form>
 
-            {usersProjects.length > 0 && <div className={"mt-4 bg-white px-4 py-3 shadow rounded-3"}>
+            {usersProjects.length > 0 && <div className={"mt-3 bg-white px-4 py-3 shadow rounded-3"}>
                 <p className={"mb-1"}>Select an existing project</p>
                 <div className={"row"} style={{"maxWidth": "105%"}}>
                     <div className={"col"}>
