@@ -1,6 +1,6 @@
 import {useEffect, useState} from "react";
 import Contract from "../../types/Contract";
-import HeaderComponent, {CONTRACTS} from "../ui/HeaderComponent";
+import HeaderComponent from "../ui/HeaderComponent";
 import {useDispatch, useSelector} from "react-redux";
 import {Link, useNavigate} from "react-router-dom";
 import {getContracts} from "../../services/ContractService";
@@ -36,7 +36,7 @@ const ContractsPage = () => {
 
     return (
         <div className={"w-full h-full"}>
-            <HeaderComponent active={CONTRACTS}/>
+            <HeaderComponent/>
             <div className={"c-header"}>
                 <h3>Contracts</h3>
             </div>
