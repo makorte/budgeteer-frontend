@@ -12,7 +12,7 @@ import {setProject} from "../../store/projectSlice";
 import {SubmitHandler, useForm} from "react-hook-form";
 import Select from 'react-select'
 import SelectOption from "../../types/SelectOption";
-import NotificationComponent, {NOTIFICATION_ERROR} from "../ui/NotificationComponent";
+import {Alert, Button, Form} from "react-bootstrap";
 
 const SelectProjectPage = () => {
     const {register, handleSubmit, formState: {errors}} = useForm<CreateProject>()
@@ -76,43 +76,53 @@ const SelectProjectPage = () => {
     }
 
     return (
-        <div className="c-form-container m-4 mt-20 w-112">
-            <NotificationComponent message={selectError} type={NOTIFICATION_ERROR}/>
-            <h3 className="mb-5 mx-2 c-form-heading">Select Project</h3>
-            <form onSubmit={handleSubmit(onCreateProject)} className={"c-form-sm z-0 pb-8"}>
-                <label htmlFor={"projectName"} className={"c-label"}>Create a new Project</label>
-                <div className={"flex flex-row space-x-2"}>
-                    <input {...register("name", {
-                        required: "Please enter a project name!",
-                        minLength: {value: 2, message: "The project name must be at least two characters long!"},
-                        maxLength: {value: 30, message: "The project name must not be longer than 30 characters!"}
-                    })} type={"text"} id={"projectName"} className={"c-input"}/>
-                    <button type={"submit"} value={"OK"} className={"c-button"}>
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                             stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
-                                  d="M13 7l5 5m0 0l-5 5m5-5H6"/>
+        <div className={"container mt-5 mx-auto"} style={{"maxWidth": "350px"}}>
+            {selectError && <Alert variant={"danger"} onClose={() => setSelectError("")}
+                                   dismissible>{selectError}</Alert>}
+
+            <h2>Select Project</h2>
+
+            <Form onSubmit={handleSubmit(onCreateProject)} className={"bg-white px-4 py-3 shadow rounded-3"}>
+                <Form.Label className={"mb-1"}>Create a new Project</Form.Label>
+
+                <div className={"row"} style={{"maxWidth": "105%"}}>
+                    <div className={"col"}>
+                        <Form.Control {...register("name", {
+                            required: "Please enter a project name!",
+                            minLength: {value: 2, message: "The project name must be at least two characters long!"},
+                            maxLength: {value: 30, message: "The project name must not be longer than 30 characters!"}
+                        })} type={"text"} className={"mr-2"}/>
+                    </div>
+                    <Button type={"submit"}
+                            className={"col-auto d-inline-flex justify-content-center align-items-center text-white"}>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                             className="bi bi-arrow-right" viewBox="0 0 16 16">
+                            <path
+                                d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
                         </svg>
-                    </button>
+                    </Button>
                 </div>
-                <p className={"mt-1 c-input-error"}>{errors.name?.message}</p>
-            </form>
-            {usersProjects.length > 0 && <div className={"c-form-sm z-0 mt-5 pb-8"}>
-                <label className={"c-label"}>Select an existing project</label>
-                <div className={"flex flex-row space-x-2"}>
-                    <Select options={usersProjects}
-                            onChange={(selected?: SelectOption | null) => selected && setSelectedProject(selected)}
-                            className={"flex-grow"} placeholder={"Select project"}
-                            isSearchable/>
-                    <button type={"submit"} value={"OK"} className={"c-button"} onClick={onSelectProject}>
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                             stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
-                                  d="M13 7l5 5m0 0l-5 5m5-5H6"/>
+                <p className={"text-danger"}>{errors.name?.message}</p>
+            </Form>
+
+            {usersProjects.length > 0 && <div className={"mt-4 bg-white px-4 py-3 shadow rounded-3"}>
+                <p className={"mb-1"}>Select an existing project</p>
+                <div className={"row"} style={{"maxWidth": "105%"}}>
+                    <div className={"col"}>
+                        <Select options={usersProjects}
+                                onChange={(selected?: SelectOption | null) => selected && setSelectedProject(selected)}
+                                placeholder={"Select project"} isSearchable className={"mr-2"}/>
+                    </div>
+                    <Button type={"submit"} onClick={onSelectProject}
+                            className={"col-auto d-inline-flex justify-content-center align-items-center text-white"}>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                             className="bi bi-arrow-right" viewBox="0 0 16 16">
+                            <path
+                                d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
                         </svg>
-                    </button>
+                    </Button>
                 </div>
-                <p className={"mt-1 c-input-error"}>{selectFormError}</p>
+                <p className={"text-danger"}>{selectFormError}</p>
             </div>}
         </div>
     )
