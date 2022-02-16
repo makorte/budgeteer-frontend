@@ -41,7 +41,9 @@ const LoginPage = () => {
             {loginInfos &&
                 <Alert variant={"primary"} onClose={() => dispatch(clearLoginInfos())}
                        dismissible>{loginInfos === REGISTERED ? "Successfully registered!" : loginInfos === LOGGED_OUT ? "Logged out!" : ""}</Alert>}
+
             <h2 className={"mb-3"}>Sign In</h2>
+
             <Form onSubmit={handleSubmit(onLogin)} className={"bg-white p-4 shadow rounded-3"}>
                 <Form.Group controlId={"usernameGroup"}>
                     <Form.Label>Username</Form.Label>
@@ -50,6 +52,7 @@ const LoginPage = () => {
                     })} type="text"/>
                     <p className={"text-danger"}>{errors.username?.message}</p>
                 </Form.Group>
+
                 <Form.Group controlId={"passwordGroup"}>
                     <Form.Label>Password</Form.Label>
                     <Form.Control {...register("password", {
@@ -57,13 +60,13 @@ const LoginPage = () => {
                     })} type="password"/>
                     <p className={"text-danger"}>{errors.password?.message}</p>
                 </Form.Group>
+
                 <div className={"d-grid gap-2 text-center mt-4"}>
                     <Button type="submit" className={"text-white"}>Log In</Button>
                     <div>
                         <Link className={"link-info"} to={"/register"}>Register</Link>
                     </div>
                 </div>
-
             </Form>
         </div>
     )
