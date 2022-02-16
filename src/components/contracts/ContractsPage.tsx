@@ -8,6 +8,7 @@ import {AxiosError, AxiosResponse} from "axios";
 import ContractListComponent from "./ContractListComponent";
 import {RootStore} from "../../store/store";
 import {initialState, setContract} from "../../store/contractSlice";
+import {Button} from "react-bootstrap";
 
 const ContractsPage = () => {
     const projectId = useSelector((state: RootStore) => state.project.project.id)
@@ -35,16 +36,17 @@ const ContractsPage = () => {
     }, [navigate, projectId, dispatch])
 
     return (
-        <div className={"w-full h-full"}>
+        <div>
             <HeaderComponent/>
-            <div className={"c-header"}>
+            <div className={"bg-white p-3 shadow"}>
                 <h3>Contracts</h3>
             </div>
-            <div className={"c-flex-middle p-4"}>
+            <div className={"text-center m-4"}>
                 <ContractListComponent contracts={contracts} setContracts={setContracts}/>
             </div>
-            <div className={"c-flex-middle"}>
-                <Link to={"/contracts/create"} className={"c-button mb-5"}>Create Contract</Link>
+            <div className={"text-center"}>
+                <Button><Link to={"/contracts/create"} className={"text-white"} style={{"textDecoration": "none"}}>Create
+                    Contract</Link></Button>
             </div>
         </div>
     )
