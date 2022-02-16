@@ -1,10 +1,11 @@
 import HeaderComponent from "../ui/HeaderComponent";
 import {useSelector} from "react-redux";
 import {RootStore} from "../../store/store";
-import {useEffect} from "react";
+import React, {useEffect} from "react";
 import {Link, useNavigate} from "react-router-dom";
 import {deleteContract} from "../../services/ContractService";
 import {AxiosError} from "axios";
+import {Button} from "react-bootstrap";
 
 const ContractDetailsPage = () => {
     const contract = useSelector((state: RootStore) => state.contract.contract)
@@ -31,25 +32,45 @@ const ContractDetailsPage = () => {
     return (
         <div>
             <HeaderComponent/>
-            <Link to={"/contracts"}>Back</Link>
-            <h3>Contract Details</h3>
-            <div>
-                <h4>Basic information</h4>
-                <p><b>Name:</b></p>
-                <p>{contract.name}</p>
-                <p><b>Id:</b></p>
-                <p>{contract.internalNumber}</p>
-                <p><b>Type:</b></p>
-                <p>{contract.type}</p>
-                <p><b>Start date:</b></p>
-                <p>{contract.startDate}</p>
-                <p><b>Budget:</b></p>
-                <p>{contract.budget.amount}</p>
+            <div className={"bg-white p-3 shadow"}>
+                <h3>Contract Details</h3>
             </div>
-            <div>
-                <h4>Options</h4>
-                <Link to={"/contracts/create"}>Edit</Link><br/>
-                <button onClick={onDelete}>Delete</button>
+            <div className={"m-4 container mx-auto"} style={{"maxWidth": "600px"}}>
+                <div>
+                    <div className={"m-3 bg-primary text-white shadow-sm p-2 px-5 text-center"}>
+                        <p className={"my-0"}><b>Name:</b></p>
+                        <p className={"fs-4 my-0"}>{contract.name}</p>
+                    </div>
+                </div>
+                <div>
+                    <div className={"m-3 bg-primary text-white shadow-sm p-2 px-5 text-center"}>
+                        <p className={"my-0"}><b>Id:</b></p>
+                        <p className={"fs-4 my-0"}>{contract.internalNumber}</p>
+                    </div>
+                </div>
+                <div>
+                    <div className={"m-3 bg-primary text-white shadow-sm p-2 px-5 text-center"}>
+                        <p className={"my-0"}><b>Type:</b></p>
+                        <p className={"fs-4 my-0"}>{contract.type}</p>
+                    </div>
+                </div>
+                <div>
+                    <div className={"m-3 bg-primary text-white shadow-sm p-2 px-5 text-center"}>
+                        <p className={"my-0"}><b>Start date:</b></p>
+                        <p className={"fs-4 my-0"}>{contract.startDate}</p>
+                    </div>
+                </div>
+                <div>
+                    <div className={"m-3 bg-primary text-white shadow-sm p-2 px-5 text-center"}>
+                        <p className={"my-0"}><b>Budget:</b></p>
+                        <p className={"fs-4 my-0"}>{contract.budget.amount}</p>
+                    </div>
+                </div>
+            </div>
+            <div className={"text-center"}>
+                <Button className={"m-2"}><Link to={"/contracts/create"} className={"text-white"}
+                                                style={{"textDecoration": "none"}}>Edit</Link></Button>
+                <Button variant={"danger"} className={"text-white m-2"} onClick={onDelete}>Delete</Button>
             </div>
         </div>
     );
