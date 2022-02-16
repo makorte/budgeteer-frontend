@@ -1,7 +1,7 @@
 import {FIXED_PRICE, TIME_AND_MATERIAL} from "../../types/Contract";
 import React, {useEffect} from "react";
 import CreateContract from "../../types/CreateContract";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {Link, useNavigate} from "react-router-dom";
 import {AxiosError} from "axios";
 import {RootStore} from "../../store/store";
@@ -10,6 +10,7 @@ import {SubmitHandler, useForm} from "react-hook-form";
 import {Button, Form, FormGroup} from "react-bootstrap";
 import Select from "react-select";
 import SelectOption from "../../types/SelectOption";
+import {setContract} from "../../store/contractSlice";
 
 const CreateContractPage = () => {
     const currentContract = useSelector((state: RootStore) => state.contract.contract)
@@ -19,6 +20,7 @@ const CreateContractPage = () => {
     const contractTypes = [{value: 0, label: TIME_AND_MATERIAL}, {value: 0, label: FIXED_PRICE}]
 
     const navigate = useNavigate()
+    const dispatch = useDispatch()
 
     useEffect(() => {
         if (currentContract.id) {
@@ -38,7 +40,10 @@ const CreateContractPage = () => {
             navigate("/selectProject")
         } else if (currentContract.id) {
             updateContract(currentContract.id, contract)
-                .then(() => navigate("/contracts"))
+                .then(res => {
+                    dispatch(setContract(res.data))
+                    navigate("/contracts/details")
+                })
                 .catch((err: AxiosError) => {
                     if (err.response?.status === 401) {
                         navigate("/login")
