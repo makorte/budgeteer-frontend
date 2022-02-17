@@ -76,7 +76,7 @@ const SelectProjectPage = () => {
     }
 
     return (
-        <div className={"container mt-5 mx-auto"} style={{"maxWidth": "350px"}}>
+        <div className={"mt-5 mx-auto mw-350"}>
             {selectError && <Alert variant={"danger"} onClose={() => setSelectError("")}
                                    dismissible>{selectError}</Alert>}
 
@@ -85,7 +85,7 @@ const SelectProjectPage = () => {
             <Form onSubmit={handleSubmit(onCreateProject)} className={"bg-white px-4 py-3 shadow rounded-3"}>
                 <Form.Label className={"mb-1"}>Create a new Project</Form.Label>
 
-                <div className={"row"} style={{"maxWidth": "105%"}}>
+                <div className={"row mw-p-105"}>
                     <div className={"col"}>
                         <Form.Control {...register("name", {
                             required: "Please enter a project name!",
@@ -103,7 +103,7 @@ const SelectProjectPage = () => {
 
             {usersProjects.length > 0 && <div className={"mt-3 bg-white px-4 py-3 shadow rounded-3"}>
                 <p className={"mb-1"}>Select an existing project</p>
-                <div className={"row"} style={{"maxWidth": "105%"}}>
+                <div className={"row mw-p-105"}>
                     <div className={"col"}>
                         <Select options={usersProjects}
                                 onChange={(selected?: SelectOption | null) => selected && setSelectedProject(selected)}

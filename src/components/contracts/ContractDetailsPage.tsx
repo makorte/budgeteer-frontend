@@ -35,7 +35,7 @@ const ContractDetailsPage = () => {
             <div className={"bg-white p-3 shadow"}>
                 <h3>Contract Details</h3>
             </div>
-            <div className={"m-4 container mx-auto"} style={{"maxWidth": "600px"}}>
+            <div className={"m-4 container mx-auto mw-600"}>
                 <div>
                     <div className={"m-3 bg-primary text-white shadow-sm p-2 px-5 text-center"}>
                         <p className={"my-0"}><b>Name:</b></p>
@@ -68,8 +68,7 @@ const ContractDetailsPage = () => {
                 </div>
             </div>
             <div className={"text-center"}>
-                <Button className={"m-2"}><Link to={"/contracts/create"} className={"text-white"}
-                                                style={{"textDecoration": "none"}}>Edit</Link></Button>
+                <Button className={"m-2"}><Link to={"/contracts/create"} className={"text-white td-none"}>Edit</Link></Button>
                 <Button variant={"danger"} className={"text-white m-2"} onClick={onDelete}>Delete</Button>
             </div>
         </div>

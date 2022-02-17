@@ -40,7 +40,7 @@ const ContractListComponent = ({contracts, setContracts}: ContractListProps) => 
     return (
         <div>
             {contracts.length < 1 ? <p className={"fs-5"}>No contracts exist in this project!</p> :
-                <Table className={"bg-white mx-auto my-4 shadow-sm"} striped style={{"maxWidth": "1200px"}}>
+                <Table className={"bg-white mx-auto my-4 shadow-sm mw-1200"} striped>
                     <thead className={"bg-primary text-white"}>
                     <tr>
                         <th>Name</th>
@@ -65,8 +65,8 @@ const ContractListComponent = ({contracts, setContracts}: ContractListProps) => 
                             <td>{contract.budget.amount}</td>
                             <td>{contract.budgetSpent.amount}</td>
                             <td>{contract.budgetLeft.amount}</td>
-                            <td><i className="bi bi-pencil-square link-info" style={{"cursor": "pointer"}} onClick={() => onEdit(index)}/></td>
-                            <td><i className="bi bi-trash3 link-danger" style={{"cursor": "pointer"}} onClick={() => onDelete(index)}/></td>
+                            <td><i className="bi bi-pencil-square link-info cursor-pointer" onClick={() => onEdit(index)}/></td>
+                            <td><i className="bi bi-trash3 link-danger cursor-pointer" onClick={() => onDelete(index)}/></td>
                         </tr>
                     ))}
                     </tbody>

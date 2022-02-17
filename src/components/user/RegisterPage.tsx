@@ -33,7 +33,7 @@ const RegisterPage = () => {
     }
 
     return (
-        <div className={"container mt-5 mx-auto"} style={{"maxWidth": "350px"}}>
+        <div className={"mt-5 mx-auto mw-350"}>
             {registerError && <Alert variant={"danger"} onClose={() => setRegisterError("")}
                                      dismissible>{registerError}</Alert>}
 

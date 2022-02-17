@@ -10,6 +10,8 @@ import {RootStore} from "../../store/store";
 import {clearLoginInfos, LOGGED_OUT, REGISTERED} from "../../store/loginInfosSlice";
 import {Alert, Button, Form} from "react-bootstrap";
 
+import "../../custom.scss"
+
 const LoginPage = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
@@ -35,7 +37,7 @@ const LoginPage = () => {
     }
 
     return (
-        <div className={"container mt-5 mx-auto"} style={{"maxWidth": "350px"}}>
+        <div className={"mw-350 mt-5 mx-auto"}>
             {loginError && <Alert variant={"danger"} onClose={() => setLoginError("")}
                                   dismissible>{loginError}</Alert>}
             {loginInfos &&

@@ -45,7 +45,7 @@ const ContractsPage = () => {
                 <ContractListComponent contracts={contracts} setContracts={setContracts}/>
             </div>
             <div className={"text-center"}>
-                <Button><Link to={"/contracts/create"} className={"text-white"} style={{"textDecoration": "none"}}>Create
+                <Button><Link to={"/contracts/create"} className={"text-white td-none"}>Create
                     Contract</Link></Button>
             </div>
         </div>

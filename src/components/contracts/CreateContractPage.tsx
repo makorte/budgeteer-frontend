@@ -30,7 +30,7 @@ const CreateContractPage = () => {
             setValue("startDate", currentContract.startDate)
             setValue("taxRate", currentContract.taxRate!.toString())
         }
-    }, [currentContract])
+    }, [currentContract, setValue])
 
     const onCreateContract: SubmitHandler<CreateContract> = data => {
         const contract = data;
@@ -66,13 +66,12 @@ const CreateContractPage = () => {
 
     return (
         <>
-            <Link to={"/contracts"} className={"m-2 d-inline-flex justify-content-center align-items-center fs-5"}
-                  style={{"textDecoration": "none"}}>
+            <Link to={"/contracts"} className={"m-2 d-inline-flex justify-content-center align-items-center fs-5 td-none"}>
                 <i className="bi bi-arrow-left mx-2"/>
                 Back
             </Link>
 
-            <div className={"container mt-5 mx-auto"} style={{"maxWidth": "350px"}}>
+            <div className={"mt-5 mx-auto mw-350"}>
                 <h2>{currentContract.id ? "Edit Contract" : "Create Contract"}</h2>
 
                 <Form onSubmit={handleSubmit(onCreateContract)} className={"bg-white px-4 py-3 shadow rounded-3"}>
