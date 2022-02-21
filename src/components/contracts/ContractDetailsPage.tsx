@@ -34,7 +34,7 @@ const ContractDetailsPage = () => {
 
     useEffect(() => {
         getContract(parseInt(id!))
-            .then((res: AxiosResponse) => setContract(res.data))
+            .then((res: AxiosResponse<Contract>) => setContract(res.data))
             .catch((err: AxiosError) => {
                 if (err.response?.status === 401) {
                     navigate("/login")
