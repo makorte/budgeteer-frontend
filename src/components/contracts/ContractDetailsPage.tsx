@@ -1,21 +1,31 @@
 import HeaderComponent from "../ui/HeaderComponent";
-import {useSelector} from "react-redux";
-import {RootStore} from "../../store/store";
-import React, {useEffect} from "react";
-import {Link, useNavigate} from "react-router-dom";
-import {deleteContract} from "../../services/ContractService";
-import {AxiosError} from "axios";
+import React, {useEffect, useState} from "react";
+import {Link, useNavigate, useParams} from "react-router-dom";
+import {deleteContract, getContract} from "../../services/ContractService";
+import {AxiosError, AxiosResponse} from "axios";
 import {Button} from "react-bootstrap";
+import Contract from "../../types/Contract";
+import {initialState} from "../../store/contractSlice";
 
 const ContractDetailsPage = () => {
-    const contract = useSelector((state: RootStore) => state.contract.contract)
+    const {id} = useParams()
+    const [contract, setContract] = useState<Contract>(initialState.contract)
+
     const navigate = useNavigate()
 
     useEffect(() => {
-        if (!contract.id) {
-            navigate("/selectProject")
-        }
-    }, [navigate, contract.id])
+        getContract(parseInt(id!))
+            .then((res: AxiosResponse) => setContract(res.data))
+            .catch((err: AxiosError) => {
+                if(err.response?.status === 401) {
+                    navigate("/login")
+                } else if(err.response?.status === 500) {
+                    navigate("/contracts")
+                } else {
+                    console.log(err.response)
+                }
+            })
+    }, [navigate, id])
 
     const onDelete = () => {
         deleteContract(contract.id!)
@@ -68,7 +78,8 @@ const ContractDetailsPage = () => {
                 </div>
             </div>
             <div className={"text-center"}>
-                <Button className={"m-2"}><Link to={"/contracts/create"} className={"text-white td-none"}>Edit</Link></Button>
+                <Button className={"m-2"}><Link to={"/contracts/create"}
+                                                className={"text-white td-none"}>Edit</Link></Button>
                 <Button variant={"danger"} className={"text-white m-2"} onClick={onDelete}>Delete</Button>
             </div>
         </div>
