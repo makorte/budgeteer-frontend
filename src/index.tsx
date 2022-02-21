@@ -1,5 +1,5 @@
 import React from 'react';
-import {Route, Routes, BrowserRouter as Router} from 'react-router-dom'
+import {BrowserRouter as Router, Route, Routes} from 'react-router-dom'
 import {Provider} from "react-redux";
 
 import RegisterPage from "./components/user/RegisterPage";
@@ -26,7 +26,7 @@ ReactDOM.render(
                     <Route path="/selectProject" element={<SelectProjectPage/>}/>
                     <Route path="/dashboard" element={<DashboardPage/>}/>
                     <Route path="/contracts" element={<ContractsPage/>}/>
-                    <Route path="/contracts/create" element={<CreateContractPage/>}/>
+                    <Route path="/contracts/create/:id" element={<CreateContractPage/>}/>
                     <Route path="/contracts/:id" element={<ContractDetailsPage/>}/>
                 </Routes>
             </Router>
