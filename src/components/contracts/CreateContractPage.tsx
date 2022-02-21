@@ -12,6 +12,8 @@ import Select from "react-select";
 import SelectOption from "../../types/SelectOption";
 
 const CreateContractPage = () => {
+    const projectId = useSelector((state: RootStore) => state.project.project.id)
+
     const {id} = useParams()
     const [urlContract, setUrlContract] = useState<Contract>({
         id: undefined,
@@ -35,9 +37,7 @@ const CreateContractPage = () => {
         taxRate: undefined
     })
 
-    const projectId = useSelector((state: RootStore) => state.project.project.id)
     const {setValue, register, handleSubmit, formState: {errors}} = useForm<CreateContract>()
-
     const contractTypes = [{value: 0, label: TIME_AND_MATERIAL}, {value: 0, label: FIXED_PRICE}]
 
     const navigate = useNavigate()
