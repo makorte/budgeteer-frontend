@@ -79,7 +79,7 @@ const CreateContractPage = () => {
                         <Form.Label className={"mb-1"}>Name</Form.Label>
                         <Form.Control {...register("name", {
                             required: "Please enter a name!"
-                        })} type={"text"}/>
+                        })} type={"text"} autoFocus/>
                         <p className={"text-danger"}>{errors.name?.message}</p>
                     </Form.Group>
 

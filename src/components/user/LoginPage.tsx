@@ -51,7 +51,7 @@ const LoginPage = () => {
                     <Form.Label>Username</Form.Label>
                     <Form.Control {...register("username", {
                         required: "Please enter a username!"
-                    })} type="text"/>
+                    })} type="text" autoFocus/>
                     <p className={"text-danger"}>{errors.username?.message}</p>
                 </Form.Group>
 

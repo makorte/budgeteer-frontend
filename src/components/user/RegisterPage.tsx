@@ -50,7 +50,7 @@ const RegisterPage = () => {
                             value: /^[a-zA-Z0-9]*$/,
                             message: "The username must only contain letters and numbers!"
                         },
-                    })} type="text"/>
+                    })} type="text" autoFocus/>
                     <p className={"text-danger"}>{errors.username?.message}</p>
                 </Form.Group>
 

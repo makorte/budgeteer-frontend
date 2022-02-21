@@ -91,7 +91,7 @@ const SelectProjectPage = () => {
                             required: "Please enter a project name!",
                             minLength: {value: 2, message: "The project name must be at least two characters long!"},
                             maxLength: {value: 30, message: "The project name must not be longer than 30 characters!"}
-                        })} type={"text"} className={"mr-2"}/>
+                        })} type={"text"} className={"mr-2"} autoFocus/>
                     </div>
                     <Button type={"submit"}
                             className={"col-auto d-inline-flex justify-content-center align-items-center text-white"}>
