@@ -27,7 +27,7 @@ ReactDOM.render(
                     <Route path="/dashboard" element={<DashboardPage/>}/>
                     <Route path="/contracts" element={<ContractsPage/>}/>
                     <Route path="/contracts/create" element={<CreateContractPage/>}/>
-                    <Route path="/contracts/details" element={<ContractDetailsPage/>}/>
+                    <Route path="/contracts/:id" element={<ContractDetailsPage/>}/>
                 </Routes>
             </Router>
         </Provider>

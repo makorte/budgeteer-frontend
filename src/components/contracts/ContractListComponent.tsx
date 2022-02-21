@@ -1,7 +1,7 @@
 import Contract from "../../types/Contract";
 import {useDispatch} from "react-redux";
 import {setContract} from "../../store/contractSlice";
-import {useNavigate} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {deleteContract} from "../../services/ContractService";
 import {AxiosError} from "axios";
 import {Table} from "react-bootstrap";
@@ -14,11 +14,6 @@ type ContractListProps = {
 const ContractListComponent = ({contracts, setContracts}: ContractListProps) => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
-
-    const onSelect = (i: number) => {
-        dispatch(setContract(contracts[i]))
-        navigate("/contracts/details")
-    }
 
     const onEdit = (i: number) => {
         dispatch(setContract(contracts[i]))
@@ -57,8 +52,7 @@ const ContractListComponent = ({contracts, setContracts}: ContractListProps) => 
                     <tbody>
                     {contracts.map((contract, index) => (
                         <tr key={index}>
-                            <td><a href={"#"} className={"link-info"}
-                                   onClick={() => onSelect(index)}>{contract.name}</a></td>
+                            <td><Link to={`/contracts/${contract.id}`} className={"link-info"}>{contract.name}</Link></td>
                             <td>{contract.internalNumber}</td>
                             <td>{contract.startDate}</td>
                             <td>{contract.type}</td>
