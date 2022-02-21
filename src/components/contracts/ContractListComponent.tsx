@@ -1,6 +1,4 @@
 import Contract from "../../types/Contract";
-import {useDispatch} from "react-redux";
-import {setContract} from "../../store/contractSlice";
 import {Link, useNavigate} from "react-router-dom";
 import {deleteContract} from "../../services/ContractService";
 import {AxiosError} from "axios";
@@ -12,13 +10,7 @@ type ContractListProps = {
 }
 
 const ContractListComponent = ({contracts, setContracts}: ContractListProps) => {
-    const dispatch = useDispatch()
     const navigate = useNavigate()
-
-    const onEdit = (i: number) => {
-        dispatch(setContract(contracts[i]))
-        navigate("/contracts/create")
-    }
 
     const onDelete = (i: number) => {
         deleteContract(contracts[i].id!)
@@ -52,15 +44,18 @@ const ContractListComponent = ({contracts, setContracts}: ContractListProps) => 
                     <tbody>
                     {contracts.map((contract, index) => (
                         <tr key={index}>
-                            <td><Link to={`/contracts/${contract.id}`} className={"link-info"}>{contract.name}</Link></td>
+                            <td><Link to={`/contracts/${contract.id}`} className={"link-info"}>{contract.name}</Link>
+                            </td>
                             <td>{contract.internalNumber}</td>
                             <td>{contract.startDate}</td>
                             <td>{contract.type}</td>
                             <td>{contract.budget.amount}</td>
                             <td>{contract.budgetSpent.amount}</td>
                             <td>{contract.budgetLeft.amount}</td>
-                            <td><i className="bi bi-pencil-square link-info cursor-pointer" onClick={() => onEdit(index)}/></td>
-                            <td><i className="bi bi-trash3 link-danger cursor-pointer" onClick={() => onDelete(index)}/></td>
+                            <td><Link to={`/contracts/create/${contract.id}`}><i
+                                className="bi bi-pencil-square link-info cursor-pointer"/></Link></td>
+                            <td><i className="bi bi-trash3 link-danger cursor-pointer" onClick={() => onDelete(index)}/>
+                            </td>
                         </tr>
                     ))}
                     </tbody>
