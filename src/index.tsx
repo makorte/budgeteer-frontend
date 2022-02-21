@@ -14,6 +14,7 @@ import ContractDetailsPage from "./components/contracts/ContractDetailsPage";
 import ReactDOM from "react-dom";
 
 import "./custom.scss"
+import ErrorPage from "./components/ui/ErrorPage";
 
 ReactDOM.render(
     <React.StrictMode>
@@ -28,6 +29,7 @@ ReactDOM.render(
                     <Route path="/contracts" element={<ContractsPage/>}/>
                     <Route path="/contracts/create" element={<CreateContractPage/>}/>
                     <Route path="/contracts/details" element={<ContractDetailsPage/>}/>
+                    <Route path="*" element={<ErrorPage/>}/>
                 </Routes>
             </Router>
         </Provider>
