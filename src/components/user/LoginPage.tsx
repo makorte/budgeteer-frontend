@@ -29,7 +29,7 @@ const LoginPage = () => {
 
     const onLogin: SubmitHandler<LoginUser> = data => {
         login(data)
-            .then((res: AxiosResponse) => {
+            .then((res: AxiosResponse<{accessToken: string}>) => {
                 localStorage.setItem("token", `Bearer ${res.data.accessToken}`)
                 navigate("/selectProject")
             })

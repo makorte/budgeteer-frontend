@@ -24,7 +24,7 @@ const ContractsPage = () => {
             navigate("/selectProject")
         } else {
             getContracts(projectId!)
-                .then((res: AxiosResponse) => setContracts(res.data))
+                .then((res: AxiosResponse<Contract[]>) => setContracts(res.data))
                 .catch((err: AxiosError) => {
                     if (err.response?.status === 401) {
                         navigate("/login")

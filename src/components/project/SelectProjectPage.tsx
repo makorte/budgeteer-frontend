@@ -27,7 +27,7 @@ const SelectProjectPage = () => {
 
     useEffect(() => {
         getProjects()
-            .then((res: AxiosResponse) => {
+            .then((res: AxiosResponse<Project[]>) => {
                 const projects: SelectOption[] = []
                 res.data.map((project: Project) => projects.push({value: project.id!, label: project.name}))
                 setUsersProjects(projects)
@@ -43,7 +43,7 @@ const SelectProjectPage = () => {
 
     const onCreateProject: SubmitHandler<CreateProject> = data => {
         createProject(data)
-            .then((res: AxiosResponse) => {
+            .then((res: AxiosResponse<Project>) => {
                 dispatch(setProject(res.data))
                 navigate("/dashboard")
             })
@@ -62,7 +62,7 @@ const SelectProjectPage = () => {
         if (!selectedProject) return setSelectFormError("Please select a project!")
 
         getProjectById(selectedProject.value.toString())
-            .then((res: AxiosResponse) => {
+            .then((res: AxiosResponse<Project>) => {
                 dispatch(setProject(res.data))
                 navigate("/dashboard")
             })
