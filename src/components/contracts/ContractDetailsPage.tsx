@@ -97,7 +97,7 @@ const ContractDetailsPage = () => {
                 </div>
             </div>
             <div className={"text-center"}>
-                <Button className={"m-2"}><Link to={`/contracts/create/${id}`}
+                <Button className={"m-2"}><Link to={`/contracts/update/${id}`}
                                                 className={"text-white td-none"}>Edit</Link></Button>
                 <Button variant={"danger"} className={"text-white m-2"} onClick={onDelete}>Delete</Button>
             </div>

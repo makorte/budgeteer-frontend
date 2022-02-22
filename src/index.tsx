@@ -26,8 +26,9 @@ ReactDOM.render(
                     <Route path="/selectProject" element={<SelectProjectPage/>}/>
                     <Route path="/dashboard" element={<DashboardPage/>}/>
                     <Route path="/contracts" element={<ContractsPage/>}/>
-                    <Route path="/contracts/create/:id" element={<CreateContractPage/>}/>
-                    <Route path="/contracts/:id" element={<ContractDetailsPage/>}/>
+                    <Route path="/contracts/update/:id" element={<CreateContractPage/>}/>
+                    <Route path="/contracts/create" element={<CreateContractPage/>}/>
+                    <Route path="/contracts/details/:id" element={<ContractDetailsPage/>}/>
                 </Routes>
             </Router>
         </Provider>
