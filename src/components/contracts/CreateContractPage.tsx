@@ -73,7 +73,7 @@ const CreateContractPage = () => {
             navigate("/selectProject")
         } else if (id) {
             updateContract(parseInt(id), contract)
-                .then(() => navigate(`/contracts/${id}`))
+                .then(() => navigate(`/contracts/details/${id}`))
                 .catch((err: AxiosError) => {
                     if (err.response?.status === 401) {
                         navigate("/login")
@@ -83,7 +83,7 @@ const CreateContractPage = () => {
                 })
         } else {
             createContract(projectId!, contract)
-                .then((res: AxiosResponse<Contract>) => navigate(`/contracts/${res.data.id}`))
+                .then((res: AxiosResponse<Contract>) => navigate(`/contracts/details/${res.data.id}`))
                 .catch((err: AxiosError) => {
                     if (err.response?.status === 401) {
                         navigate("/login")

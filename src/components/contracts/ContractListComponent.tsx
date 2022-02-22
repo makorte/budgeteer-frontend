@@ -44,7 +44,7 @@ const ContractListComponent = ({contracts, setContracts}: ContractListProps) => 
                     <tbody>
                     {contracts.map((contract, index) => (
                         <tr key={index}>
-                            <td><Link to={`/contracts/${contract.id}`} className={"link-info"}>{contract.name}</Link>
+                            <td><Link to={`/contracts/details/${contract.id}`} className={"link-info"}>{contract.name}</Link>
                             </td>
                             <td>{contract.internalNumber}</td>
                             <td>{contract.startDate}</td>
@@ -52,7 +52,7 @@ const ContractListComponent = ({contracts, setContracts}: ContractListProps) => 
                             <td>{contract.budget.amount}</td>
                             <td>{contract.budgetSpent.amount}</td>
                             <td>{contract.budgetLeft.amount}</td>
-                            <td><Link to={`/contracts/create/${contract.id}`}><i
+                            <td><Link to={`/contracts/update/${contract.id}`}><i
                                 className="bi bi-pencil-square link-info cursor-pointer"/></Link></td>
                             <td><i className="bi bi-trash3 link-danger cursor-pointer" onClick={() => onDelete(index)}/>
                             </td>
