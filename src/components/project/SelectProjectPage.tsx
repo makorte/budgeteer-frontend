@@ -6,9 +6,6 @@ import {createProject, getProjectById, getProjects} from "../../services/Project
 
 import Project from "../../types/Project";
 import CreateProject from "../../types/CreateProject";
-
-import {useDispatch} from "react-redux";
-import {setProject} from "../../store/projectSlice";
 import {SubmitHandler, useForm} from "react-hook-form";
 import Select from 'react-select'
 import SelectOption from "../../types/SelectOption";
@@ -22,14 +19,13 @@ const SelectProjectPage = () => {
     const [selectFormError, setSelectFormError] = useState("")
     const [selectError, setSelectError] = useState("")
 
-    const dispatch = useDispatch()
     const navigate = useNavigate()
 
     useEffect(() => {
         getProjects()
             .then((res: AxiosResponse<Project[]>) => {
                 const projects: SelectOption[] = []
-                res.data.map((project: Project) => projects.push({value: project.id!, label: project.name}))
+                res.data.forEach((project: Project) => projects.push({value: project.id!, label: project.name}))
                 setUsersProjects(projects)
             })
             .catch((err: AxiosError) => {
@@ -44,8 +40,7 @@ const SelectProjectPage = () => {
     const onCreateProject: SubmitHandler<CreateProject> = data => {
         createProject(data)
             .then((res: AxiosResponse<Project>) => {
-                dispatch(setProject(res.data))
-                navigate("/dashboard")
+                navigate(`/${res.data.id}/dashboard`)
             })
             .catch((err: AxiosError) => {
                 if (err.response?.status === 401) {
@@ -63,8 +58,7 @@ const SelectProjectPage = () => {
 
         getProjectById(selectedProject.value.toString())
             .then((res: AxiosResponse<Project>) => {
-                dispatch(setProject(res.data))
-                navigate("/dashboard")
+                navigate(`/${res.data.id}/dashboard`)
             })
             .catch((err: AxiosError) => {
                 if (err.response?.status === 401) {

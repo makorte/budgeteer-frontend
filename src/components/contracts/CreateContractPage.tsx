@@ -1,20 +1,20 @@
 import Contract, {FIXED_PRICE, TIME_AND_MATERIAL} from "../../types/Contract";
 import React, {useEffect, useState} from "react";
 import CreateContract from "../../types/CreateContract";
-import {useSelector} from "react-redux";
 import {Link, useNavigate, useParams} from "react-router-dom";
 import {AxiosError, AxiosResponse} from "axios";
-import {RootStore} from "../../store/store";
 import {createContract, getContract, updateContract} from "../../services/ContractService";
 import {SubmitHandler, useForm} from "react-hook-form";
 import {Button, Form, FormGroup} from "react-bootstrap";
 import Select from "react-select";
 import SelectOption from "../../types/SelectOption";
 
-const CreateContractPage = () => {
-    const projectId = useSelector((state: RootStore) => state.project.project.id)
+type Props = {
+    updateMode: boolean
+}
 
-    const {id} = useParams()
+const CreateContractPage = ({updateMode}: Props) => {
+    const {projectId, contractId} = useParams()
     const [urlContract, setUrlContract] = useState<Contract>({
         id: undefined,
         projectId: undefined,
@@ -43,37 +43,41 @@ const CreateContractPage = () => {
     const navigate = useNavigate()
 
     useEffect(() => {
-        if (id) {
-            getContract(parseInt(id!))
-                .then((res: AxiosResponse<Contract>) => {
-                    const contract = res.data;
-                    setUrlContract(contract)
+        if (updateMode) {
+            if (!contractId) {
+                navigate(`/${projectId}/contracts`)
+            } else {
+                getContract(parseInt(contractId))
+                    .then((res: AxiosResponse<Contract>) => {
+                        const contract = res.data;
+                        setUrlContract(contract)
 
-                    setValue("budget", contract.budget)
-                    setValue("internalNumber", contract.internalNumber)
-                    setValue("name", contract.name)
-                    setValue("startDate", contract.startDate)
-                    setValue("taxRate", contract.taxRate!.toString())
-                })
-                .catch((err: AxiosError) => {
-                    if (err.response?.status === 401) {
-                        navigate("/login")
-                    } else {
-                        alert(err.message)
-                    }
-                })
+                        setValue("budget", contract.budget)
+                        setValue("internalNumber", contract.internalNumber)
+                        setValue("name", contract.name)
+                        setValue("startDate", contract.startDate)
+                        setValue("taxRate", contract.taxRate!.toString())
+                    })
+                    .catch((err: AxiosError) => {
+                        if (err.response?.status === 401) {
+                            navigate("/login")
+                        } else if(err.response?.status === 400 || err.response?.status === 500) {
+                            navigate(`/${projectId}/contracts`)
+                        } else {
+                            alert(err.message)
+                        }
+                    })
+            }
         }
-    }, [id, setValue, navigate])
+    }, [setValue, navigate])
 
     const onCreateContract: SubmitHandler<CreateContract> = data => {
         const contract = data;
         contract.budget.currencyCode = "EUR"
 
-        if (!projectId) {
-            navigate("/selectProject")
-        } else if (id) {
-            updateContract(parseInt(id), contract)
-                .then(() => navigate(`/contracts/details/${id}`))
+        if (updateMode) {
+            updateContract(parseInt(contractId!), contract)
+                .then(() => navigate(`/${projectId}/contracts/details/${contractId}`))
                 .catch((err: AxiosError) => {
                     if (err.response?.status === 401) {
                         navigate("/login")
@@ -82,8 +86,8 @@ const CreateContractPage = () => {
                     }
                 })
         } else {
-            createContract(projectId!, contract)
-                .then((res: AxiosResponse<Contract>) => navigate(`/contracts/details/${res.data.id}`))
+            createContract(parseInt(projectId!), contract)
+                .then((res: AxiosResponse<Contract>) => navigate(`/${projectId}/contracts/details/${res.data.id}`))
                 .catch((err: AxiosError) => {
                     if (err.response?.status === 401) {
                         navigate("/login")
@@ -96,7 +100,7 @@ const CreateContractPage = () => {
 
     return (
         <>
-            <Link to={"/contracts"}
+            <Link to={`/${projectId}/contracts`}
                   className={"m-2 d-inline-flex justify-content-center align-items-center fs-5 td-none"}>
                 <i className="bi bi-arrow-left mx-2"/>
                 Back

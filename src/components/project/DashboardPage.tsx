@@ -1,17 +1,31 @@
-import React, {useEffect} from "react";
-import {useNavigate} from "react-router-dom";
-import {useSelector} from "react-redux";
+import React, {useEffect, useState} from "react";
+import {useNavigate, useParams} from "react-router-dom";
 import HeaderComponent from "../ui/HeaderComponent";
-import {RootStore} from "../../store/store";
+import Project from "../../types/Project";
+import {getProjectById} from "../../services/ProjectService";
+import {AxiosError, AxiosResponse} from "axios";
 
 const DashboardPage = () => {
-    const project = useSelector((state: RootStore) => state.project.project)
+    const {projectId} = useParams()
+    const [project, setProject] = useState<Project>({id: undefined, name: ''})
 
     const navigate = useNavigate()
 
     useEffect(() => {
-        if (project.id === undefined) {
-            return navigate("/selectProject")
+        if (!projectId) {
+            navigate("/selectProject")
+        } else {
+            getProjectById(projectId)
+                .then((res: AxiosResponse<Project>) => setProject(res.data))
+                .catch((err: AxiosError) => {
+                    if (err.response?.status === 401) {
+                        navigate("/login")
+                    } else if (err.response?.status === 400 || err.response?.status === 403){
+                        navigate("/selectProject")
+                    } else {
+                        alert(err.message)
+                    }
+                })
         }
     }, [navigate, project.id])
 

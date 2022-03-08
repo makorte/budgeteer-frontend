@@ -1,9 +1,7 @@
 import {combineReducers, createStore} from "redux";
-import projectSlice from "./projectSlice";
 import loginInfosSlice from "./loginInfosSlice";
 
 const rootReducer = combineReducers({
-    project: projectSlice,
     loginInfos: loginInfosSlice
 })
 
