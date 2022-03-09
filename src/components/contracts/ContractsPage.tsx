@@ -29,7 +29,7 @@ const ContractsPage = () => {
                     }
                 })
         }
-    }, [navigate])
+    }, [navigate, projectId])
 
     return (
         <div>

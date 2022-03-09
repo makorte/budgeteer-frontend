@@ -69,7 +69,7 @@ const CreateContractPage = ({updateMode}: Props) => {
                     })
             }
         }
-    }, [setValue, navigate])
+    }, [setValue, navigate, contractId, projectId, updateMode])
 
     const onCreateContract: SubmitHandler<CreateContract> = data => {
         const contract = data;

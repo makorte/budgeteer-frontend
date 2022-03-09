@@ -48,7 +48,7 @@ const ContractDetailsPage = () => {
                     }
                 })
         }
-    }, [navigate])
+    }, [navigate, contractId, projectId])
 
     const onDelete = () => {
         deleteContract(contract.id!)

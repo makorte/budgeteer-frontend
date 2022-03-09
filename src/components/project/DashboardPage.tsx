@@ -27,7 +27,7 @@ const DashboardPage = () => {
                     }
                 })
         }
-    }, [navigate, project.id])
+    }, [navigate, projectId])
 
     return (
         <div>
