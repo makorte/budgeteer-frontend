@@ -1,5 +1,5 @@
 import Contract, {FIXED_PRICE, TIME_AND_MATERIAL} from "../../types/Contract";
-import React, {useEffect, useState} from "react";
+import React, {useEffect} from "react";
 import CreateContract from "../../types/CreateContract";
 import {Link, useNavigate, useParams} from "react-router-dom";
 import {AxiosError, AxiosResponse} from "axios";
@@ -15,30 +15,8 @@ type Props = {
 
 const CreateContractPage = ({updateMode}: Props) => {
     const {projectId, contractId} = useParams()
-    const [urlContract, setUrlContract] = useState<Contract>({
-        id: undefined,
-        projectId: undefined,
-        internalNumber: "",
-        name: "",
-        type: undefined,
-        startDate: "",
-        budget: {
-            currencyCode: "EUR",
-            amount: ""
-        },
-        budgetSpent: {
-            currencyCode: "EUR",
-            amount: ""
-        },
-        budgetLeft: {
-            currencyCode: "EUR",
-            amount: ""
-        },
-        taxRate: undefined
-    })
-
     const {setValue, register, handleSubmit, formState: {errors}} = useForm<CreateContract>()
-    const contractTypes = [{value: 0, label: TIME_AND_MATERIAL}, {value: 0, label: FIXED_PRICE}]
+    const contractTypes = [{value: 0, label: TIME_AND_MATERIAL}, {value: 1, label: FIXED_PRICE}]
 
     const navigate = useNavigate()
 
@@ -49,14 +27,11 @@ const CreateContractPage = ({updateMode}: Props) => {
             } else {
                 getContract(parseInt(contractId))
                     .then((res: AxiosResponse<Contract>) => {
-                        const contract = res.data;
-                        setUrlContract(contract)
-
-                        setValue("budget", contract.budget)
-                        setValue("internalNumber", contract.internalNumber)
-                        setValue("name", contract.name)
-                        setValue("startDate", contract.startDate)
-                        setValue("taxRate", contract.taxRate!.toString())
+                        setValue("budget", res.data.budget)
+                        setValue("internalNumber", res.data.internalNumber)
+                        setValue("name", res.data.name)
+                        setValue("startDate", res.data.startDate)
+                        setValue("taxRate", res.data.taxRate!.toString())
                     })
                     .catch((err: AxiosError) => {
                         if (err.response?.status === 401) {
@@ -107,7 +82,7 @@ const CreateContractPage = ({updateMode}: Props) => {
             </Link>
 
             <div className={"mt-5 mx-auto mw-350"}>
-                <h2>{urlContract.id ? "Edit Contract" : "Create Contract"}</h2>
+                <h2>{updateMode ? "Edit Contract" : "Create Contract"}</h2>
 
                 <Form onSubmit={handleSubmit(onCreateContract)} className={"bg-white px-4 py-3 shadow rounded-3"}>
                     <Form.Group controlId={"nameGroup"}>

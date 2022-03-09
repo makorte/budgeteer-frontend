@@ -4,18 +4,18 @@ import {deleteContract} from "../../services/ContractService";
 import {AxiosError} from "axios";
 import {Table} from "react-bootstrap";
 
-type ContractListProps = {
+type Props = {
     projectId: string,
     contracts: Contract[],
-    setContracts: Function
+    refetch: Function
 }
 
-const ContractListComponent = ({projectId, contracts, setContracts}: ContractListProps) => {
+const ContractListComponent = ({projectId, contracts, refetch}: Props) => {
     const navigate = useNavigate()
 
     const onDelete = (i: number) => {
         deleteContract(contracts[i].id!)
-            .then(() => setContracts(contracts.filter((_, index) => i !== index)))
+            .then(() => refetch())
             .catch((err: AxiosError) => {
                 if (err.response?.status === 401) {
                     navigate("/login")

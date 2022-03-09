@@ -1,35 +1,14 @@
-import {useEffect, useState} from "react";
-import Contract from "../../types/Contract";
 import HeaderComponent from "../ui/HeaderComponent";
-import {Link, useNavigate, useParams} from "react-router-dom";
-import {getContracts} from "../../services/ContractService";
-import {AxiosError, AxiosResponse} from "axios";
+import {Link, useParams} from "react-router-dom";
 import ContractListComponent from "./ContractListComponent";
 import {Button} from "react-bootstrap";
+import useGet from "../../services/useGet";
+import SpinnerComponent from "../ui/SpinnerComponent";
+import Contract from "../../types/Contract";
 
 const ContractsPage = () => {
     const {projectId} = useParams()
-    const [contracts, setContracts] = useState<Contract[]>([])
-
-    const navigate = useNavigate()
-
-    useEffect(() => {
-        if (!projectId) {
-            navigate("/selectProject")
-        } else {
-            getContracts(parseInt(projectId))
-                .then((res: AxiosResponse<Contract[]>) => setContracts(res.data))
-                .catch((err: AxiosError) => {
-                    if (err.response?.status === 401) {
-                        navigate("/login")
-                    } else if (err.response?.status === 400 || err.response?.status === 403){
-                        navigate("/selectProject")
-                    } else {
-                        alert(err.message)
-                    }
-                })
-        }
-    }, [navigate, projectId])
+    const {data: contracts, loading, refetch} = useGet<Contract[]>(`/contracts?projectId=${projectId}`, [], "/selectProject")
 
     return (
         <div>
@@ -37,13 +16,15 @@ const ContractsPage = () => {
             <div className={"bg-white p-3 shadow"}>
                 <h3>Contracts</h3>
             </div>
-            <div className={"text-center m-4"}>
-                <ContractListComponent projectId={projectId!} contracts={contracts} setContracts={setContracts}/>
-            </div>
-            <div className={"text-center"}>
-                <Button><Link to={`/${projectId}/contracts/create`} className={"text-white td-none"}>Create
-                    Contract</Link></Button>
-            </div>
+            {loading ? <SpinnerComponent/> : <>
+                <div className={"text-center m-4"}>
+                    <ContractListComponent projectId={projectId!} contracts={contracts} refetch={refetch}/>
+                </div>
+                <div className={"text-center"}>
+                    <Button><Link to={`/${projectId}/contracts/create`} className={"text-white td-none"}>Create
+                        Contract</Link></Button>
+                </div>
+            </>}
         </div>
     )
 }
