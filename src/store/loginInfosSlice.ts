@@ -7,7 +7,7 @@ interface LoginInfosState {
     loginInfo: typeof LOGGED_OUT | typeof REGISTERED | undefined
 }
 
-export const initialState: LoginInfosState = {
+const initialState: LoginInfosState = {
     loginInfo: undefined
 }
 
