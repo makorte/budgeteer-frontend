@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from "react";
-import {AxiosError, AxiosResponse} from "axios";
 import {Link, useNavigate} from "react-router-dom";
 import {SubmitHandler, useForm} from "react-hook-form";
 
@@ -27,14 +26,7 @@ const LoginPage = () => {
         }
     }, [dispatch])
 
-    const onLogin: SubmitHandler<LoginUser> = data => {
-        login(data)
-            .then((res: AxiosResponse<{accessToken: string}>) => {
-                localStorage.setItem("token", `Bearer ${res.data.accessToken}`)
-                navigate("/selectProject")
-            })
-            .catch((err: AxiosError) => setLoginError(err.response?.status === 401 ? "Wrong username or password!" : err.message))
-    }
+    const onLogin: SubmitHandler<LoginUser> = data => login(data, navigate, setLoginError)
 
     return (
         <div className={"mw-350 mt-5 mx-auto"}>

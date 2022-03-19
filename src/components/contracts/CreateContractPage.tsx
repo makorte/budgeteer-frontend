@@ -1,8 +1,7 @@
-import Contract, {FIXED_PRICE, TIME_AND_MATERIAL} from "../../types/Contract";
+import {FIXED_PRICE, TIME_AND_MATERIAL} from "../../types/Contract";
 import React, {useEffect} from "react";
 import CreateContract from "../../types/CreateContract";
 import {Link, useNavigate, useParams} from "react-router-dom";
-import {AxiosError, AxiosResponse} from "axios";
 import {createContract, getContract, updateContract} from "../../services/ContractService";
 import {SubmitHandler, useForm} from "react-hook-form";
 import {Button, Form, FormGroup} from "react-bootstrap";
@@ -25,53 +24,22 @@ const CreateContractPage = ({updateMode}: Props) => {
             if (!contractId) {
                 navigate(`/${projectId}/contracts`)
             } else {
-                getContract(parseInt(contractId))
-                    .then((res: AxiosResponse<Contract>) => {
-                        setValue("budget", res.data.budget)
-                        setValue("internalNumber", res.data.internalNumber)
-                        setValue("name", res.data.name)
-                        setValue("startDate", res.data.startDate)
-                        setValue("taxRate", res.data.taxRate!.toString())
-                    })
-                    .catch((err: AxiosError) => {
-                        if (err.response?.status === 401) {
-                            navigate("/login")
-                        } else if(err.response?.status === 400 || err.response?.status === 500) {
-                            navigate(`/${projectId}/contracts`)
-                        } else {
-                            alert(err.message)
+                getContract(contractId, navigate, projectId!)
+                    .then(res => {
+                        if (res) {
+                            setValue("name", res.name)
+                            setValue("internalNumber", res.internalNumber)
+                            setValue("startDate", res.startDate)
+                            setValue("type", res.type)
+                            setValue("budget", res.budget)
+                            setValue("taxRate", res.taxRate!.toString())
                         }
                     })
             }
         }
     }, [setValue, navigate, contractId, projectId, updateMode])
 
-    const onCreateContract: SubmitHandler<CreateContract> = data => {
-        const contract = data;
-        contract.budget.currencyCode = "EUR"
-
-        if (updateMode) {
-            updateContract(parseInt(contractId!), contract)
-                .then(() => navigate(`/${projectId}/contracts/details/${contractId}`))
-                .catch((err: AxiosError) => {
-                    if (err.response?.status === 401) {
-                        navigate("/login")
-                    } else {
-                        alert(err.message)
-                    }
-                })
-        } else {
-            createContract(parseInt(projectId!), contract)
-                .then((res: AxiosResponse<Contract>) => navigate(`/${projectId}/contracts/details/${res.data.id}`))
-                .catch((err: AxiosError) => {
-                    if (err.response?.status === 401) {
-                        navigate("/login")
-                    } else {
-                        console.log(err.response)
-                    }
-                })
-        }
-    }
+    const onCreateContract: SubmitHandler<CreateContract> = data => updateMode ? updateContract(contractId!, data, navigate, projectId!) : createContract(projectId!, data, navigate)
 
     return (
         <>

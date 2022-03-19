@@ -1,10 +1,7 @@
 import React, {useEffect, useState} from "react";
-import {AxiosError, AxiosResponse} from "axios";
 import {useNavigate} from "react-router-dom";
 
 import {createProject, getProjectById, getProjects} from "../../services/ProjectService";
-
-import Project from "../../types/Project";
 import CreateProject from "../../types/CreateProject";
 import {SubmitHandler, useForm} from "react-hook-form";
 import Select from 'react-select'
@@ -22,51 +19,15 @@ const SelectProjectPage = () => {
     const navigate = useNavigate()
 
     useEffect(() => {
-        getProjects()
-            .then((res: AxiosResponse<Project[]>) => {
-                const projects: SelectOption[] = []
-                res.data.forEach((project: Project) => projects.push({value: project.id!, label: project.name}))
-                setUsersProjects(projects)
-            })
-            .catch((err: AxiosError) => {
-                if (err.response?.status === 401) {
-                    navigate("/login")
-                } else {
-                    alert(err.message)
-                }
-            })
+        getProjects(navigate)
+            .then(res => res && setUsersProjects(res))
     }, [navigate])
 
-    const onCreateProject: SubmitHandler<CreateProject> = data => {
-        createProject(data)
-            .then((res: AxiosResponse<Project>) => {
-                navigate(`/${res.data.id}/dashboard`)
-            })
-            .catch((err: AxiosError) => {
-                if (err.response?.status === 401) {
-                    navigate("/login")
-                } else if (err.response?.status === 400) {
-                    setSelectError("This project name already exists!")
-                } else {
-                    alert(err.message)
-                }
-            })
-    }
+    const onCreateProject: SubmitHandler<CreateProject> = data => createProject(data, navigate, setSelectError)
 
     const onSelectProject = () => {
         if (!selectedProject) return setSelectFormError("Please select a project!")
-
-        getProjectById(selectedProject.value.toString())
-            .then((res: AxiosResponse<Project>) => {
-                navigate(`/${res.data.id}/dashboard`)
-            })
-            .catch((err: AxiosError) => {
-                if (err.response?.status === 401) {
-                    navigate("/login")
-                } else {
-                    alert(err.message)
-                }
-            })
+        getProjectById(selectedProject.value.toString(), navigate)
     }
 
     return (

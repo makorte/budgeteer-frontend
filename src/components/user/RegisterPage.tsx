@@ -4,9 +4,7 @@ import {Link, useNavigate} from "react-router-dom";
 import {registerUser} from "../../services/UserService";
 import RegisterUser from "../../types/RegisterUser";
 import {SubmitHandler, useForm} from "react-hook-form";
-import {AxiosError} from "axios";
 import {useDispatch} from "react-redux";
-import {setRegistered} from "../../store/loginInfosSlice";
 import {Alert, Button, Form} from "react-bootstrap";
 
 const RegisterPage = () => {
@@ -15,22 +13,7 @@ const RegisterPage = () => {
     const {register, handleSubmit, formState: {errors}} = useForm<RegisterUser>()
     const [registerError, setRegisterError] = useState("")
 
-    const onRegister: SubmitHandler<RegisterUser> = data => {
-        registerUser(data)
-            .then(() => {
-                dispatch(setRegistered())
-                navigate("/login")
-            })
-            .catch((err: AxiosError) => {
-                if (err.response?.data.usernameAlreadyInUse) {
-                    setRegisterError("Username already in use!")
-                } else if (err.response?.data.mailAlreadyInUse) {
-                    setRegisterError("Mail already in use!")
-                } else {
-                    setRegisterError(err.message)
-                }
-            })
-    }
+    const onRegister: SubmitHandler<RegisterUser> = data => registerUser(data, dispatch, navigate, setRegisterError)
 
     return (
         <div className={"mt-5 mx-auto mw-350"}>

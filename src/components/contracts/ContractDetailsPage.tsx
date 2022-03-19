@@ -2,7 +2,6 @@ import HeaderComponent from "../ui/HeaderComponent";
 import React from "react";
 import {Link, useNavigate, useParams} from "react-router-dom";
 import {deleteContract} from "../../services/ContractService";
-import {AxiosError} from "axios";
 import {Button} from "react-bootstrap";
 import useGet from "../../services/useGet";
 import SpinnerComponent from "../ui/SpinnerComponent";
@@ -33,17 +32,7 @@ const ContractDetailsPage = () => {
         taxRate: undefined
     }, `/${projectId}/contracts`)
 
-    const onDelete = () => {
-        deleteContract(contract.id!)
-            .then(() => navigate("/contracts"))
-            .catch((err: AxiosError) => {
-                if (err.response?.status === 401) {
-                    navigate("/login")
-                } else {
-                    alert(err.message)
-                }
-            })
-    }
+    const onDelete = () => deleteContract(contract.id!, navigate, projectId!)
 
     return (
         <>
