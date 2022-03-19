@@ -7,6 +7,7 @@ import {SubmitHandler, useForm} from "react-hook-form";
 import {Button, Form, FormGroup} from "react-bootstrap";
 import Select from "react-select";
 import SelectOption from "../../types/SelectOption";
+import useDestination from "../../services/useDestination";
 
 type Props = {
     updateMode: boolean
@@ -18,6 +19,8 @@ const CreateContractPage = ({updateMode}: Props) => {
     const contractTypes = [{value: 0, label: TIME_AND_MATERIAL}, {value: 1, label: FIXED_PRICE}]
 
     const navigate = useNavigate()
+
+    useDestination()
 
     useEffect(() => {
         if (updateMode) {

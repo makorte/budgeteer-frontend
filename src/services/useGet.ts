@@ -16,10 +16,12 @@ function useGet<T>(url: string, initialData: T, onError: string) {
             .catch(err => {
                 if (err.response?.status === 401) {
                     navigate("/login")
+                } else if (err.response?.status === 403) {
+                    navigate("/selectProject")
                 } else if (err.response?.status === 400 || err.response?.status === 500) {
                     navigate(onError)
                 } else {
-                    console.error(err)
+                    alert(err.message)
                 }
             })
             .finally(() => setLoading(false))

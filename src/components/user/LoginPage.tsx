@@ -14,6 +14,7 @@ import "../../custom.scss"
 const LoginPage = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
+    const destination = useSelector((state: RootStore) => state.destintaion.destination)
     const loginInfos = useSelector((state: RootStore) => state.loginInfos.loginInfo)
     const {register, handleSubmit, formState: {errors}} = useForm<LoginUser>()
     const [loginError, setLoginError] = useState("")
@@ -26,7 +27,7 @@ const LoginPage = () => {
         }
     }, [dispatch])
 
-    const onLogin: SubmitHandler<LoginUser> = data => login(data, navigate, setLoginError)
+    const onLogin: SubmitHandler<LoginUser> = data => login(data, navigate, setLoginError, destination)
 
     return (
         <div className={"mw-350 mt-5 mx-auto"}>

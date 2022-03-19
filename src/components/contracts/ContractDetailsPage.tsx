@@ -6,6 +6,7 @@ import {Button} from "react-bootstrap";
 import useGet from "../../services/useGet";
 import SpinnerComponent from "../ui/SpinnerComponent";
 import Contract from "../../types/Contract";
+import useDestination from "../../services/useDestination";
 
 const ContractDetailsPage = () => {
     const {projectId, contractId} = useParams()
@@ -31,6 +32,8 @@ const ContractDetailsPage = () => {
         },
         taxRate: undefined
     }, `/${projectId}/contracts`)
+
+    useDestination()
 
     const onDelete = () => deleteContract(contract.id!, navigate, projectId!)
 

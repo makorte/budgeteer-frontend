@@ -6,11 +6,13 @@ import {NavigateFunction} from "react-router-dom";
 import {setRegistered} from "../store/loginInfosSlice";
 import {Dispatch} from "redux";
 
-export const login = (user: LoginUser, navigate: NavigateFunction, setLoginError: Function) => {
+export const login = (user: LoginUser, navigate: NavigateFunction, setLoginError: Function, destination: string | undefined) => {
     http.post("/authenticate", user)
         .then((res: AxiosResponse<{ accessToken: string }>) => {
             localStorage.setItem("token", `Bearer ${res.data.accessToken}`)
-            navigate("/selectProject")
+
+            if(destination) navigate(destination)
+            else navigate("/selectProject")
         })
         .catch((err: AxiosError) => setLoginError(err.response?.status === 401 ? "Wrong username or password!" : err.message))
 }

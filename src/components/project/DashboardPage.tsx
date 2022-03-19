@@ -4,6 +4,7 @@ import HeaderComponent from "../ui/HeaderComponent";
 import Project from "../../types/Project";
 import useGet from "../../services/useGet";
 import SpinnerComponent from "../ui/SpinnerComponent";
+import useDestination from "../../services/useDestination";
 
 const DashboardPage = () => {
     const {projectId} = useParams()
@@ -11,6 +12,8 @@ const DashboardPage = () => {
         id: undefined,
         name: ''
     }, "/selectProject")
+
+    useDestination()
 
     return (
         <div>
