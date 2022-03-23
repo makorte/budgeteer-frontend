@@ -5,11 +5,12 @@ import {AxiosError, AxiosResponse} from "axios";
 import SelectOption from "../types/SelectOption";
 import {NavigateFunction} from "react-router-dom";
 import {handleError} from "./handleError";
+import {toDashboard} from "./NavigationService";
 
 export const createProject = (project: CreateProject, navigate: NavigateFunction, setSelectError: Function) => {
     http.post("/projects", project)
         .then((res: AxiosResponse<Project>) => {
-            navigate(`/${res.data.id}/dashboard`)
+            toDashboard(navigate, res.data.id!)
         })
         .catch((err: AxiosError) => {
             if (err.response?.status === 400) setSelectError("This project name already exists!")
@@ -20,7 +21,7 @@ export const createProject = (project: CreateProject, navigate: NavigateFunction
 export const getProjectById = (id: string, navigate: NavigateFunction) => {
     http.get<Project>(`/projects/${id}`)
         .then((res: AxiosResponse<Project>) => {
-            navigate(`/${res.data.id}/dashboard`)
+            toDashboard(navigate, res.data.id!)
         })
         .catch((err: AxiosError) => handleError(err, navigate))
 }

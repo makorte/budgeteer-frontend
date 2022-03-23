@@ -5,6 +5,7 @@ import {AxiosError, AxiosResponse} from "axios";
 import {NavigateFunction} from "react-router-dom";
 import {setRegistered} from "../store/loginInfosSlice";
 import {Dispatch} from "redux";
+import {toLogin, toSelectProject} from "./NavigationService";
 
 export const login = (user: LoginUser, navigate: NavigateFunction, setLoginError: Function, destination: string | undefined) => {
     http.post("/authenticate", user)
@@ -12,7 +13,7 @@ export const login = (user: LoginUser, navigate: NavigateFunction, setLoginError
             localStorage.setItem("token", `Bearer ${res.data.accessToken}`)
 
             if(destination) navigate(destination)
-            else navigate("/selectProject")
+            else toSelectProject(navigate)
         })
         .catch((err: AxiosError) => setLoginError(err.response?.status === 401 ? "Wrong username or password!" : err.message))
 }
@@ -21,7 +22,7 @@ export const registerUser = (user: RegisterUser, dispatch: Dispatch, navigate: N
     http.post("/register", user)
         .then(() => {
             dispatch(setRegistered())
-            navigate("/login")
+            toLogin(navigate)
         })
         .catch((err: AxiosError) => {
             if (err.response?.data.usernameAlreadyInUse) {

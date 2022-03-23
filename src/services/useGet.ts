@@ -1,6 +1,7 @@
 import {useEffect, useState} from "react";
 import http from "../http-common";
 import {useNavigate} from "react-router-dom";
+import {toLogin, toSelectProject} from "./NavigationService";
 
 function useGet<T>(url: string, initialData: T, onError: string) {
     const [data, setData] = useState(initialData)
@@ -15,9 +16,9 @@ function useGet<T>(url: string, initialData: T, onError: string) {
             .then(res => setData(res.data))
             .catch(err => {
                 if (err.response?.status === 401) {
-                    navigate("/login")
+                    toLogin(navigate)
                 } else if (err.response?.status === 403) {
-                    navigate("/selectProject")
+                    toSelectProject(navigate)
                 } else if (err.response?.status === 400 || err.response?.status === 500) {
                     navigate(onError)
                 } else {
