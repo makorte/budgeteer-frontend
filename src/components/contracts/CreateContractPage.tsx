@@ -5,8 +5,6 @@ import {Link, useNavigate, useParams} from "react-router-dom";
 import {createContract, getContract, updateContract} from "../../services/ContractService";
 import {SubmitHandler, useForm} from "react-hook-form";
 import {Button, Form, FormGroup} from "react-bootstrap";
-import Select from "react-select";
-import SelectOption from "../../types/SelectOption";
 import useDestination from "../../services/useDestination";
 
 type Props = {
@@ -16,7 +14,7 @@ type Props = {
 const CreateContractPage = ({updateMode}: Props) => {
     const {projectId, contractId} = useParams()
     const {setValue, register, handleSubmit, formState: {errors}} = useForm<CreateContract>()
-    const contractTypes = [{value: 0, label: TIME_AND_MATERIAL}, {value: 1, label: FIXED_PRICE}]
+    const contractTypes = [TIME_AND_MATERIAL, FIXED_PRICE]
 
     const navigate = useNavigate()
 
@@ -81,12 +79,11 @@ const CreateContractPage = ({updateMode}: Props) => {
                     </FormGroup>
 
                     <FormGroup controlId={"typeGroup"}>
-                        <Form.Label className={"mb-1"}>Type</Form.Label>
-                        <Select {...register("type", {
-                            required: "Please select a contract type!"
-                        })} options={contractTypes}
-                                onChange={(selected?: SelectOption | null) => selected && setValue("type", selected.label)}/>
-                        <p className={"text-danger"}>{errors.type?.message}</p>
+                        <label htmlFor={"type"} className={"mb-1"}>Type</label>
+                        <select className={"form-control"} {...register("type")} id={"type"}>
+                            {contractTypes.map(contractType => <option
+                            value={contractType} key={contractType}>{contractType}</option>)}
+                        </select>
                     </FormGroup>
 
                     <FormGroup controlId={"budgetGroup"}>

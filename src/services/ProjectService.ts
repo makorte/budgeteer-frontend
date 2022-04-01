@@ -2,7 +2,6 @@ import CreateProject from "../types/CreateProject";
 import http from "../http-common";
 import Project from "../types/Project";
 import {AxiosError, AxiosResponse} from "axios";
-import SelectOption from "../types/SelectOption";
 import {NavigateFunction} from "react-router-dom";
 import {handleError} from "./handleError";
 import {toDashboard} from "./NavigationService";
@@ -26,13 +25,9 @@ export const getProjectById = (id: string, navigate: NavigateFunction) => {
         .catch((err: AxiosError) => handleError(err, navigate))
 }
 
-export const getProjects = (navigate: NavigateFunction): Promise<SelectOption[] | void> => {
+export const getProjects = (navigate: NavigateFunction): Promise<Project[] | void> => {
     return http.get<Project[]>("/projects")
-        .then((res: AxiosResponse<Project[]>) => {
-            const projects: SelectOption[] = []
-            res.data.forEach((project: Project) => projects.push({value: project.id!, label: project.name}))
-            return projects
-        })
+        .then((res: AxiosResponse<Project[]>) => res.data)
         .catch((err: AxiosError) => {
             handleError(err, navigate)
         })
