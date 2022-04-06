@@ -15,7 +15,7 @@ const ContractListComponent = ({projectId, contracts, refetch}: Props) => {
     const onDelete = (i: number) => deleteContract(contracts[i].id!, navigate, projectId, refetch)
 
     return (
-        <div>
+        <div data-testid={"contract-list"}>
             {contracts.length < 1 ? <p className={"fs-5"}>No contracts exist in this project!</p> :
                 <Table className={"bg-white mx-auto my-4 shadow-sm mw-1200"} striped>
                     <thead className={"bg-primary text-white"}>
@@ -44,7 +44,7 @@ const ContractListComponent = ({projectId, contracts, refetch}: Props) => {
                             <td>{contract.budgetLeft.amount}</td>
                             <td><Link to={`/${projectId}/contracts/update/${contract.id}`}><i
                                 className="bi bi-pencil-square link-info cursor-pointer"/></Link></td>
-                            <td><i className="bi bi-trash3 link-danger cursor-pointer" onClick={() => onDelete(index)}/>
+                            <td><i data-testid={`delete-btn-${contract.id}`} className="bi bi-trash3 link-danger cursor-pointer" onClick={() => onDelete(index)}/>
                             </td>
                         </tr>
                     ))}

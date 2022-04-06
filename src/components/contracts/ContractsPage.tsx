@@ -19,7 +19,7 @@ const ContractsPage = () => {
             <div className={"bg-white p-3 shadow"}>
                 <h3>Contracts</h3>
             </div>
-            {loading ? <SpinnerComponent/> : <>
+            {loading ? <SpinnerComponent/> : <div data-testid={"contracts-wrapper"}>
                 <div className={"text-center m-4"}>
                     <ContractListComponent projectId={projectId!} contracts={contracts} refetch={refetch}/>
                 </div>
@@ -27,7 +27,7 @@ const ContractsPage = () => {
                     <Button><Link to={`/${projectId}/contracts/create`} className={"text-white td-none"}>Create
                         Contract</Link></Button>
                 </div>
-            </>}
+            </div>}
         </div>
     )
 }

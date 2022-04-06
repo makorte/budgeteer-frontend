@@ -24,7 +24,7 @@ const RegisterPage = () => {
 
             <Form onSubmit={handleSubmit(onRegister)} className={"bg-white p-4 shadow rounded-3"}>
                 <Form.Group controlId={"usernameGroup"}>
-                    <Form.Label>Username:</Form.Label>
+                    <Form.Label>Username</Form.Label>
                     <Form.Control {...register("username", {
                         required: "Please enter a username!",
                         minLength: {value: 3, message: "The username must be at least three characters long!"},
@@ -38,7 +38,7 @@ const RegisterPage = () => {
                 </Form.Group>
 
                 <Form.Group controlId={"emailGroup"}>
-                    <Form.Label>E-Mail:</Form.Label>
+                    <Form.Label>E-Mail</Form.Label>
                     <Form.Control {...register("email", {
                         required: "Please enter an EMail-Address!",
                         pattern: {
@@ -50,7 +50,7 @@ const RegisterPage = () => {
                 </Form.Group>
 
                 <Form.Group controlId={"passwordGroup"}>
-                    <Form.Label>Password:</Form.Label>
+                    <Form.Label>Password</Form.Label>
                     <Form.Control {...register("password", {
                         required: "Please enter a password!",
                         minLength: {value: 8, message: "The password must be at least 8 characters long!"}
@@ -59,7 +59,7 @@ const RegisterPage = () => {
                 </Form.Group>
 
                 <div className={"d-grid gap-2 text-center mt-4"}>
-                    <Button type="submit" className={"text-white"}>Register</Button>
+                    <Button data-testid={"register-btn"} type="submit" className={"text-white"}>Register</Button>
                     <div>
                         <Link className={"link-info"} to={"/login"}>Log In</Link>
                     </div>

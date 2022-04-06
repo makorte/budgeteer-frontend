@@ -22,7 +22,7 @@ const DashboardPage = () => {
                 <h3>Dashboard</h3>
             </div>
             {loading ? <SpinnerComponent/> :
-                <p className={"m-3 fs-5"}>Welcome to <b className={"font-extrabold"}>{project.name}</b>!</p>}
+                <p data-testid={"project"} className={"m-3 fs-5"}>Welcome to <b className={"font-extrabold"}>{project.name}</b>!</p>}
         </div>
     )
 }

@@ -43,7 +43,7 @@ const ContractDetailsPage = () => {
             <div className={"bg-white p-3 shadow"}>
                 <h3>Contract Details</h3>
             </div>
-            {loading ? <SpinnerComponent/> : <>
+            {loading ? <SpinnerComponent/> : <div data-testid={"contract-wrapper"}>
                 <div className={"m-4 container mx-auto mw-600"}>
                     <div>
                         <div className={"m-3 bg-primary text-white shadow-sm p-2 px-5 text-center"}>
@@ -81,7 +81,7 @@ const ContractDetailsPage = () => {
                                                     className={"text-white td-none"}>Edit</Link></Button>
                     <Button variant={"danger"} className={"text-white m-2"} onClick={onDelete}>Delete</Button>
                 </div>
-            </>}
+            </div>}
         </>
     );
 }
