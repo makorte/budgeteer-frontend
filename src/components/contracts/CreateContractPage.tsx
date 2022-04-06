@@ -1,17 +1,20 @@
 import {FIXED_PRICE, TIME_AND_MATERIAL} from "../../types/Contract";
 import React, {useEffect} from "react";
 import CreateContract from "../../types/CreateContract";
-import {Link, useNavigate, useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import {createContract, getContract, updateContract} from "../../services/ContractService";
 import {SubmitHandler, useForm} from "react-hook-form";
 import {Button, Form, FormGroup} from "react-bootstrap";
 import useDestination from "../../services/useDestination";
+import {useSelector} from "react-redux";
+import {RootStore} from "../../store/store";
 
 type Props = {
     updateMode: boolean
 }
 
 const CreateContractPage = ({updateMode}: Props) => {
+    const backDestination = useSelector((state: RootStore) => state.contractsBack.destination);
     const {projectId, contractId} = useParams()
     const {setValue, register, handleSubmit, formState: {errors}} = useForm<CreateContract>()
     const contractTypes = [TIME_AND_MATERIAL, FIXED_PRICE]
@@ -42,13 +45,18 @@ const CreateContractPage = ({updateMode}: Props) => {
 
     const onCreateContract: SubmitHandler<CreateContract> = data => updateMode ? updateContract(contractId!, data, navigate, projectId!) : createContract(projectId!, data, navigate)
 
+    const onBack = () => {
+        if(backDestination) navigate(backDestination)
+        else navigate(`/${projectId}/contracts`)
+    }
+
     return (
         <>
-            <Link to={`/${projectId}/contracts`}
-                  className={"m-2 d-inline-flex justify-content-center align-items-center fs-5 td-none"}>
+            <span onClick={onBack}
+                  className={"back-btn m-2 d-inline-flex justify-content-center align-items-center fs-5 td-none"}>
                 <i className="bi bi-arrow-left mx-2"/>
                 Back
-            </Link>
+            </span>
 
             <div className={"mt-5 mx-auto mw-350"}>
                 <h2>{updateMode ? "Edit Contract" : "Create Contract"}</h2>

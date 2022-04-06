@@ -2,6 +2,8 @@ import Contract from "../../types/Contract";
 import {Link, useNavigate} from "react-router-dom";
 import {deleteContract} from "../../services/ContractService";
 import {Table} from "react-bootstrap";
+import {useDispatch} from "react-redux";
+import {setContractsBackDestination} from "../../store/contractsBackSlice";
 
 type Props = {
     projectId: string,
@@ -11,8 +13,14 @@ type Props = {
 
 const ContractListComponent = ({projectId, contracts, refetch}: Props) => {
     const navigate = useNavigate()
+    const dispatch = useDispatch()
 
     const onDelete = (i: number) => deleteContract(contracts[i].id!, navigate, projectId, refetch)
+
+    const onEdit = (contractId: number) => {
+        dispatch(setContractsBackDestination(`/${projectId}/contracts`))
+        navigate(`/${projectId}/contracts/update/${contractId}`)
+    }
 
     return (
         <div data-testid={"contract-list"}>
@@ -42,8 +50,7 @@ const ContractListComponent = ({projectId, contracts, refetch}: Props) => {
                             <td>{contract.budget.amount}</td>
                             <td>{contract.budgetSpent.amount}</td>
                             <td>{contract.budgetLeft.amount}</td>
-                            <td><Link to={`/${projectId}/contracts/update/${contract.id}`}><i
-                                className="bi bi-pencil-square link-info cursor-pointer"/></Link></td>
+                            <td><i className="bi bi-pencil-square link-info cursor-pointer" onClick={() => onEdit(contract.id!)}/></td>
                             <td><i data-testid={`delete-btn-${contract.id}`} className="bi bi-trash3 link-danger cursor-pointer" onClick={() => onDelete(index)}/>
                             </td>
                         </tr>

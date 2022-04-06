@@ -14,12 +14,9 @@ const destinationSlice = createSlice({
     reducers: {
         setDestination: (state, action: PayloadAction<string>) => {
             state.destination = action.payload
-        },
-        clearDestination: state => {
-            state.destination = undefined
         }
     }
 })
 
-export const {setDestination, clearDestination} = destinationSlice.actions
+export const {setDestination} = destinationSlice.actions
 export default destinationSlice.reducer
