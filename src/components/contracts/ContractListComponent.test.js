@@ -4,12 +4,20 @@ import {MemoryRouter} from "react-router-dom";
 import ContractsListComponent from "./ContractListComponent";
 import {FIXED_PRICE} from "../../types/Contract";
 import {deleteContract} from "../../services/ContractService";
+import {createTestStore} from "../../createTestStore";
+import {Provider} from "react-redux";
 
 jest.mock("../../services/ContractService", () => ({
     deleteContract: jest.fn()
 }))
 
 describe("ContractListComponent", () => {
+    let store
+
+    beforeEach(() => store = createTestStore())
+
+    afterEach(() => store = null)
+
     const projectId = "1"
     const contracts = [
         {
@@ -59,8 +67,9 @@ describe("ContractListComponent", () => {
 
     test("renders contracts table if contracts is not empty", async () => {
         await act(async () => {
-            await render(<MemoryRouter><ContractsListComponent projectId={projectId} contracts={contracts}
-                                                               refetch={refetch}/></MemoryRouter>)
+            await render(<Provider store={store}><MemoryRouter><ContractsListComponent projectId={projectId}
+                                                                                       contracts={contracts}
+                                                                                       refetch={refetch}/></MemoryRouter></Provider>)
         })
 
         expect(screen.getByText(contracts[0].name)).toBeInTheDocument()
@@ -71,7 +80,9 @@ describe("ContractListComponent", () => {
 
     test("renders message if contracts is empty", async () => {
         await act(async () => {
-            await render(<MemoryRouter><ContractsListComponent projectId={projectId} contracts={[]} refetch={refetch}/></MemoryRouter>)
+            await render(<Provider store={store}><MemoryRouter><ContractsListComponent projectId={projectId}
+                                                                                       contracts={[]}
+                                                                                       refetch={refetch}/></MemoryRouter></Provider>)
         })
 
         expect(screen.getByText("No contracts exist in this project!")).toBeInTheDocument()
@@ -79,8 +90,9 @@ describe("ContractListComponent", () => {
 
     test("calls onDelete(...) when delete button clicked", async () => {
         await act(async () => {
-            await render(<MemoryRouter><ContractsListComponent projectId={projectId} contracts={contracts}
-                                                               refetch={refetch}/></MemoryRouter>)
+            await render(<Provider store={store}><MemoryRouter><ContractsListComponent projectId={projectId}
+                                                                                       contracts={contracts}
+                                                                                       refetch={refetch}/></MemoryRouter></Provider>)
             fireEvent.click(screen.getByTestId(`delete-btn-${contracts[0].id}`))
         })
 
