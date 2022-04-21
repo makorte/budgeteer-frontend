@@ -19,7 +19,7 @@ const InvoicesComponent = ({projectId, contractId, refetch}: Props) => {
         if (!loading) console.log(invoices)
     })
 
-    const onEdit = (invoiceId: number) => navigate(`/${projectId}/contracts/details/${contractId}/updateInvoice/${invoiceId}`)
+    const onEdit = (invoiceId: number) => navigate(`/${projectId}/contracts/details/${contractId}/invoices/update/${invoiceId}`)
 
     const onDelete = (invoiceId: number) => deleteInvoice(projectId, contractId, invoiceId.toString(), navigate, refetch)
 
@@ -41,18 +41,18 @@ const InvoicesComponent = ({projectId, contractId, refetch}: Props) => {
                     <tbody>
                     {invoices.map((invoice, index) => (
                         <tr key={index}>
-                            <td><Link to={"#"} className={"link-info"}>{invoice.internalNumber}</Link></td>
+                            <td><Link to={`/${projectId}/contracts/details/${contractId}/invoices/details/${invoice.invoiceId}`} className={"link-info"}>{invoice.internalNumber}</Link></td>
                             <td>{invoice.invoiceName}</td>
                             <td>{invoice.amountOwed.amount}</td>
                             <td>{invoice.yearMonth}</td>
-                            <td><i onClick={() => onEdit(invoice.invoiceId)} className="bi bi-pencil-square link-info cursor-pointer"/></td>
-                            <td><i onClick={() => onDelete(invoice.invoiceId)} className="bi bi-trash3 link-danger cursor-pointer"/></td>
+                            <td><i onClick={() => onEdit(invoice.invoiceId!)} className="bi bi-pencil-square link-info cursor-pointer"/></td>
+                            <td><i onClick={() => onDelete(invoice.invoiceId!)} className="bi bi-trash3 link-danger cursor-pointer"/></td>
                         </tr>
                     ))}
                     </tbody>
                 </Table>
                 <Button variant={"primary"} className={"text-white m-2"}><Link
-                    to={`/${projectId}/contracts/details/${contractId}/createInvoice`} className={"text-white td-none"}>Create
+                    to={`/${projectId}/contracts/details/${contractId}/invoices/create`} className={"text-white td-none"}>Create
                     Invoice</Link></Button>
             </div>
         </div>

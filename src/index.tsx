@@ -16,6 +16,7 @@ import ReactDOM from "react-dom";
 import "./custom.scss"
 import NotFoundPage from "./components/ui/NotFoundPage";
 import CreateInvoicePage from "./components/contracts/contractDetailsPage/invoices/CreateInvoicePage";
+import InvoiceDetailsPage from "./components/contracts/contractDetailsPage/invoices/InvoiceDetailsPage";
 
 ReactDOM.render(
     <React.StrictMode>
@@ -32,8 +33,9 @@ ReactDOM.render(
                     <Route path="/:projectId/contracts/create" element={<CreateContractPage updateMode={false}/>}/>
                     <Route path="/:projectId/contracts/update/:contractId" element={<CreateContractPage updateMode={true}/>}/>
                     <Route path="/:projectId/contracts/details/:contractId" element={<ContractDetailsPage/>}/>
-                    <Route path="/:projectId/contracts/details/:contractId/createInvoice" element={<CreateInvoicePage updateMode={false}/>}/>
-                    <Route path="/:projectId/contracts/details/:contractId/updateInvoice/:invoiceId" element={<CreateInvoicePage updateMode={true}/>}/>
+                    <Route path="/:projectId/contracts/details/:contractId/invoices/create" element={<CreateInvoicePage updateMode={false}/>}/>
+                    <Route path="/:projectId/contracts/details/:contractId/invoices/update/:invoiceId" element={<CreateInvoicePage updateMode={true}/>}/>
+                    <Route path="/:projectId/contracts/details/:contractId/invoices/details/:invoiceId" element={<InvoiceDetailsPage/>}/>
                     <Route path="/*" element={<NotFoundPage/>}/>
                 </Routes>
             </Router>

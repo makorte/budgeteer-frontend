@@ -2,11 +2,13 @@ import {combineReducers, createStore} from "redux";
 import loginInfosSlice from "./loginInfosSlice";
 import destinationSlice from "./destinationSlice";
 import contractsBackSlice from "./contractsBackSlice";
+import invoiceBackSlice from "./invoiceBackSlice";
 
 export const rootReducer = combineReducers({
     loginInfos: loginInfosSlice,
     destintaion: destinationSlice,
-    contractsBack: contractsBackSlice
+    contractsBack: contractsBackSlice,
+    invoiceBack: invoiceBackSlice
 })
 
 const store = createStore(

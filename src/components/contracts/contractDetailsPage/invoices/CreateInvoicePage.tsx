@@ -4,6 +4,9 @@ import {useNavigate, useParams} from "react-router-dom";
 import {SubmitHandler, useForm} from "react-hook-form";
 import CreateInvoice from "../../../../types/CreateInvoice";
 import {createInvoice, getInvoice, updateInvoice} from "../../../../services/InvoiceService";
+import {useDispatch, useSelector} from "react-redux";
+import {RootStore} from "../../../../store/store";
+import {setInvoiceBackDestination} from "../../../../store/invoiceBackSlice";
 
 type Props = {
     updateMode: boolean
@@ -11,6 +14,8 @@ type Props = {
 
 const CreateInvoicePage = ({updateMode}: Props) => {
     const navigate = useNavigate()
+    const dispatch = useDispatch()
+    const backDestination = useSelector((state: RootStore) => state.invoiceBack.destination)
     const {projectId, contractId, invoiceId} = useParams()
     const {setValue, register, handleSubmit, formState: {errors}} = useForm<CreateInvoice>()
 
@@ -23,7 +28,7 @@ const CreateInvoicePage = ({updateMode}: Props) => {
                         setValue('internalNumber', res.internalNumber)
                         setValue('yearMonth', res.yearMonth)
                         setValue('amountOwed.amount', res.amountOwed.amount)
-                        setValue('taxRate', res.taxRate.toString())
+                        setValue('taxRate', res.taxRate!.toString())
                         if (res.paidDate) setValue('paidDate', res.paidDate)
                         if (res.dueDate) setValue('dueDate', res.dueDate)
                     }
@@ -32,7 +37,9 @@ const CreateInvoicePage = ({updateMode}: Props) => {
     })
 
     const onBack = () => {
-        navigate(`/${projectId}/contracts/details/${contractId}`)
+        if(backDestination) navigate(backDestination)
+        else navigate(`/${projectId}/contracts/details/${contractId}`)
+        dispatch(setInvoiceBackDestination(undefined))
     }
 
     const onCreateInvoice: SubmitHandler<CreateInvoice> = data => updateMode ? updateInvoice(projectId!, contractId!, invoiceId!, data, navigate) : createInvoice(projectId!, contractId!, data, navigate)

@@ -1,13 +1,13 @@
 export default interface Invoice {
-    invoiceId: number,
+    invoiceId: number | undefined;
     invoiceName: string,
-    contractId: number,
+    contractId: number | undefined,
     contractName: string,
     amountOwed: {
         currencyCode: string,
         amount: string
     },
-    taxRate: number,
+    taxRate: number | undefined,
     internalNumber: string,
     yearMonth: string,
     paidDate: string,
