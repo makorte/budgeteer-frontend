@@ -1,18 +1,18 @@
 import {act} from "react-dom/test-utils";
 import {fireEvent, render, screen} from "@testing-library/react";
 import {MemoryRouter} from "react-router-dom";
-import {createTestStore} from "../../createTestStore";
+import {createTestStore} from "../../../createTestStore";
 import {Provider} from "react-redux";
 import ContractDetailsPage from "./ContractDetailsPage";
-import {FIXED_PRICE} from "../../types/Contract";
-import useGet from "../../services/useGet";
-import {deleteContract} from "../../services/ContractService";
+import {FIXED_PRICE} from "../../../types/Contract";
+import useGet from "../../../services/useGet";
+import {deleteContract} from "../../../services/ContractService";
 
-jest.mock("../../services/useGet", () => {
+jest.mock("../../../services/useGet", () => {
     return jest.fn()
 })
 
-jest.mock("../../services/ContractService", () => ({
+jest.mock("../../../services/ContractService", () => ({
     deleteContract: jest.fn()
 }))
 
