@@ -10,11 +10,12 @@ import ContractsPage from "./components/contracts/ContractsPage";
 import CreateContractPage from "./components/contracts/CreateContractPage";
 
 import store from "./store/store"
-import ContractDetailsPage from "./components/contracts/ContractDetailsPage";
+import ContractDetailsPage from "./components/contracts/contractDetailsPage/ContractDetailsPage";
 import ReactDOM from "react-dom";
 
 import "./custom.scss"
 import NotFoundPage from "./components/ui/NotFoundPage";
+import CreateInvoicePage from "./components/contracts/contractDetailsPage/invoices/CreateInvoicePage";
 
 ReactDOM.render(
     <React.StrictMode>
@@ -31,6 +32,8 @@ ReactDOM.render(
                     <Route path="/:projectId/contracts/create" element={<CreateContractPage updateMode={false}/>}/>
                     <Route path="/:projectId/contracts/update/:contractId" element={<CreateContractPage updateMode={true}/>}/>
                     <Route path="/:projectId/contracts/details/:contractId" element={<ContractDetailsPage/>}/>
+                    <Route path="/:projectId/contracts/details/:contractId/createInvoice" element={<CreateInvoicePage updateMode={false}/>}/>
+                    <Route path="/:projectId/contracts/details/:contractId/updateInvoice/:invoiceId" element={<CreateInvoicePage updateMode={true}/>}/>
                     <Route path="/*" element={<NotFoundPage/>}/>
                 </Routes>
             </Router>
