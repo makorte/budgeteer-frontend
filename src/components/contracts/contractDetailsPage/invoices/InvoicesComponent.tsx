@@ -9,11 +9,10 @@ import SpinnerComponent from "../../../ui/SpinnerComponent";
 type Props = {
     projectId: string;
     contractId: string;
-    refetch: Function;
 }
 
-const InvoicesComponent = ({projectId, contractId, refetch}: Props) => {
-    const {data: invoices, loading} = useGet<Invoice[]>(`/invoices/byContract/${contractId}`, [], "/selectProject");
+const InvoicesComponent = ({projectId, contractId}: Props) => {
+    const {data: invoices, loading, refetch} = useGet<Invoice[]>(`/invoices/byContract/${contractId}`, [], "/selectProject");
     const navigate = useNavigate()
 
     const onEdit = (invoiceId: number) => navigate(`/${projectId}/contracts/details/${contractId}/invoices/update/${invoiceId}`)
@@ -23,9 +22,9 @@ const InvoicesComponent = ({projectId, contractId, refetch}: Props) => {
     return (
         <div className="container bg-white contract-invoices m-3 p-4">
             <h2>Invoices</h2>
-            {loading ? <SpinnerComponent/> : <div className="text-center">
+            {loading ? <SpinnerComponent/> : <div data-testid={"invoices-wrapper"} className="text-center">
                 {invoices.length < 1 ? <p className={"fs-5"}>No invoices exist in this contract!</p> :
-                    <Table className={"bg-white mx-auto my-4 shadow-sm mw-1200"} striped>
+                    <Table data-testid={"invoices-list"} className={"bg-white mx-auto my-4 shadow-sm mw-1200"} striped>
                         <thead className={"bg-primary text-white"}>
                         <tr>
                             <th>Id</th>
@@ -46,9 +45,9 @@ const InvoicesComponent = ({projectId, contractId, refetch}: Props) => {
                                 <td>{invoice.amountOwed.amount}</td>
                                 <td>{invoice.yearMonth}</td>
                                 <td><i onClick={() => onEdit(invoice.invoiceId!)}
-                                       className="bi bi-pencil-square link-info cursor-pointer"/></td>
+                                       className="bi bi-pencil-square link-info cursor-pointer" data-testid={`edit-btn-${invoice.invoiceId}`}/></td>
                                 <td><i onClick={() => onDelete(invoice.invoiceId!)}
-                                       className="bi bi-trash3 link-danger cursor-pointer"/></td>
+                                       className="bi bi-trash3 link-danger cursor-pointer" data-testid={`delete-btn-${invoice.invoiceId}`}/></td>
                             </tr>
                         ))}
                         </tbody>

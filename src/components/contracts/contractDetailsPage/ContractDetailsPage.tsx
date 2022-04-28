@@ -16,7 +16,7 @@ const ContractDetailsPage = () => {
     const dispatch = useDispatch()
     const {projectId, contractId} = useParams()
     const navigate = useNavigate()
-    const {data: contract, loading, refetch} = useGet<Contract>(`/contracts/${contractId}`, {
+    const {data: contract, loading} = useGet<Contract>(`/contracts/${contractId}`, {
         id: undefined,
         projectId: undefined,
         internalNumber: "",
@@ -56,7 +56,7 @@ const ContractDetailsPage = () => {
             {loading ? <SpinnerComponent/> : <div data-testid={"contract-wrapper"}>
                 <div className={"d-flex justify-content-around"}>
                     <ContractDetailsComponent contract={contract}/>
-                    <InvoicesComponent projectId={projectId!} contractId={contractId!.toString()} refetch={refetch}/>
+                    <InvoicesComponent projectId={projectId!} contractId={contractId!.toString()}/>
                 </div>
                 <div className={"text-center"}>
                     <Button className={"m-2 text-white td-none"} onClick={onEdit}>Edit</Button>
