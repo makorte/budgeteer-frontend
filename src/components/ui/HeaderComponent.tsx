@@ -2,6 +2,7 @@ import {Link, useNavigate, useParams} from "react-router-dom";
 import {useDispatch} from "react-redux";
 import {setLoggedOut} from "../../store/loginInfosSlice";
 import {Container, Nav, Navbar} from "react-bootstrap";
+import {contractsLink, dashboardLink, loginLink, selectProjectLink} from "../../services/NavigationService";
 
 const HeaderComponent = () => {
     const dispatch = useDispatch()
@@ -11,24 +12,24 @@ const HeaderComponent = () => {
 
     const onSignOut = () => {
         dispatch(setLoggedOut())
-        navigate("/login")
+        navigate(loginLink())
     }
 
     return (
         <Navbar collapseOnSelect expand={"lg"} bg={"primary"} variant={"dark"} className={"shadow"}>
             <Container>
-                <Navbar.Brand as={Link} to={`/${projectId}/dashboard`}>Budgeteer</Navbar.Brand>
+                <Navbar.Brand as={Link} to={dashboardLink(projectId!)}>Budgeteer</Navbar.Brand>
                 <Navbar.Toggle aria-controls="responsive-navbar-nav"/>
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className={"me-auto"}>
-                        <Nav.Link as={Link} to={`/${projectId}/contracts`}
+                        <Nav.Link as={Link} to={contractsLink(projectId!)}
                                   className={"d-inline-flex justify-content-center align-items-center"}>
                             <i className="bi bi-file-earmark-text mx-2"/>
                             Contracts
                         </Nav.Link>
                     </Nav>
                     <Nav>
-                        <Nav.Link as={Link} to={"/selectProject"}
+                        <Nav.Link as={Link} to={selectProjectLink()}
                                   className={"d-inline-flex justify-content-center align-items-center"}>
                             <i className="bi bi-shuffle mx-2"/>
                             Switch project

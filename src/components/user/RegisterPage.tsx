@@ -6,6 +6,7 @@ import RegisterUser from "../../types/RegisterUser";
 import {SubmitHandler, useForm} from "react-hook-form";
 import {useDispatch} from "react-redux";
 import {Alert, Button, Form} from "react-bootstrap";
+import {loginLink} from "../../services/NavigationService";
 
 const RegisterPage = () => {
     const dispatch = useDispatch()
@@ -61,7 +62,7 @@ const RegisterPage = () => {
                 <div className={"d-grid gap-2 text-center mt-4"}>
                     <Button data-testid={"register-btn"} type="submit" className={"text-white"}>Register</Button>
                     <div>
-                        <Link className={"link-info"} to={"/login"}>Log In</Link>
+                        <Link className={"link-info"} to={loginLink()}>Log In</Link>
                     </div>
                 </div>
             </Form>

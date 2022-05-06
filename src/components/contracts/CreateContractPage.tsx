@@ -8,6 +8,7 @@ import {Button, Form, FormGroup} from "react-bootstrap";
 import useDestination from "../../services/useDestination";
 import {useSelector} from "react-redux";
 import {RootStore} from "../../store/store";
+import {contractsLink} from "../../services/NavigationService";
 
 type Props = {
     updateMode: boolean
@@ -26,7 +27,7 @@ const CreateContractPage = ({updateMode}: Props) => {
     useEffect(() => {
         if (updateMode) {
             if (!contractId) {
-                navigate(`/${projectId}/contracts`)
+                navigate(contractsLink(projectId!))
             } else {
                 getContract(contractId, navigate, projectId!)
                     .then(res => {
@@ -47,7 +48,7 @@ const CreateContractPage = ({updateMode}: Props) => {
 
     const onBack = () => {
         if(backDestination) navigate(backDestination)
-        else navigate(`/${projectId}/contracts`)
+        else navigate(contractsLink(projectId!))
     }
 
     return (

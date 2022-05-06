@@ -11,6 +11,7 @@ import {useDispatch} from "react-redux";
 import {setContractsBackDestination} from "../../../store/contractsBackSlice";
 import ContractDetailsComponent from "./ContractDetailsComponent";
 import InvoicesComponent from "./invoices/InvoicesComponent";
+import {contractDetailsLink, updateContractLink} from "../../../services/NavigationService";
 
 const ContractDetailsPage = () => {
     const dispatch = useDispatch()
@@ -43,8 +44,8 @@ const ContractDetailsPage = () => {
     const onDelete = () => deleteContract(contract.id!, navigate, projectId!)
 
     const onEdit = () => {
-        dispatch(setContractsBackDestination(`/${projectId}/contracts/details/${contractId}`))
-        navigate(`/${projectId}/contracts/update/${contractId}`)
+        dispatch(setContractsBackDestination(contractDetailsLink(projectId!, contractId!)))
+        navigate(updateContractLink(projectId!, contractId!))
     }
 
     return (

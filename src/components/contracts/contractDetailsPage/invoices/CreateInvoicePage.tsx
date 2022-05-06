@@ -7,6 +7,7 @@ import {createInvoice, getInvoice, updateInvoice} from "../../../../services/Inv
 import {useDispatch, useSelector} from "react-redux";
 import {RootStore} from "../../../../store/store";
 import {setInvoiceBackDestination} from "../../../../store/invoiceBackSlice";
+import {contractDetailsLink} from "../../../../services/NavigationService";
 
 type Props = {
     updateMode: boolean
@@ -38,7 +39,7 @@ const CreateInvoicePage = ({updateMode}: Props) => {
 
     const onBack = () => {
         if(backDestination) navigate(backDestination)
-        else navigate(`/${projectId}/contracts/details/${contractId}`)
+        else navigate(contractDetailsLink(projectId!, contractId!))
         dispatch(setInvoiceBackDestination(undefined))
     }
 

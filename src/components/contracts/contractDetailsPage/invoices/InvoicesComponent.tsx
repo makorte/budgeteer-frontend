@@ -5,6 +5,7 @@ import {Button, Table} from "react-bootstrap";
 import {Link, useNavigate} from "react-router-dom";
 import {deleteInvoice} from "../../../../services/InvoiceService";
 import SpinnerComponent from "../../../ui/SpinnerComponent";
+import {createInvoiceLink, invoiceDetailsLink, updateInvoiceLink} from "../../../../services/NavigationService";
 
 type Props = {
     projectId: string;
@@ -15,7 +16,7 @@ const InvoicesComponent = ({projectId, contractId}: Props) => {
     const {data: invoices, loading, refetch} = useGet<Invoice[]>(`/invoices/byContract/${contractId}`, [], "/selectProject");
     const navigate = useNavigate()
 
-    const onEdit = (invoiceId: number) => navigate(`/${projectId}/contracts/details/${contractId}/invoices/update/${invoiceId}`)
+    const onEdit = (invoiceId: number) => navigate(updateInvoiceLink(projectId, contractId, invoiceId))
 
     const onDelete = (invoiceId: number) => deleteInvoice(projectId, contractId, invoiceId.toString(), navigate, refetch)
 
@@ -39,7 +40,7 @@ const InvoicesComponent = ({projectId, contractId}: Props) => {
                         {invoices.map((invoice, index) => (
                             <tr key={index}>
                                 <td><Link
-                                    to={`/${projectId}/contracts/details/${contractId}/invoices/details/${invoice.invoiceId}`}
+                                    to={invoiceDetailsLink(projectId, contractId, invoice.invoiceId!)}
                                     className={"link-info"}>{invoice.internalNumber}</Link></td>
                                 <td>{invoice.invoiceName}</td>
                                 <td>{invoice.amountOwed.amount}</td>
@@ -54,7 +55,7 @@ const InvoicesComponent = ({projectId, contractId}: Props) => {
                     </Table>}
 
                 <Button variant={"primary"} className={"text-white m-2"}><Link
-                    to={`/${projectId}/contracts/details/${contractId}/invoices/create`}
+                    to={createInvoiceLink(projectId, contractId)}
                     className={"text-white td-none"}>Create
                     Invoice</Link></Button>
             </div>}

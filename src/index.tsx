@@ -17,6 +17,15 @@ import "./custom.scss"
 import NotFoundPage from "./components/ui/NotFoundPage";
 import CreateInvoicePage from "./components/contracts/contractDetailsPage/invoices/CreateInvoicePage";
 import InvoiceDetailsPage from "./components/contracts/contractDetailsPage/invoices/InvoiceDetailsPage";
+import {
+    contractDetailsLink,
+    contractsLink,
+    createContractLink, createInvoiceLink,
+    dashboardLink, invoiceDetailsLink,
+    loginLink,
+    registerLink,
+    selectProjectLink, updateContractLink, updateInvoiceLink
+} from "./services/NavigationService";
 
 ReactDOM.render(
     <React.StrictMode>
@@ -24,18 +33,18 @@ ReactDOM.render(
             <Router>
                 <Routes>
                     <Route path="/" element={<SelectProjectPage/>}/>
-                    <Route path="/login" element={<LoginPage/>}/>
-                    <Route path="/register" element={<RegisterPage/>}/>
-                    <Route path="/selectProject" element={<SelectProjectPage/>}/>
+                    <Route path={loginLink()} element={<LoginPage/>}/>
+                    <Route path={registerLink()} element={<RegisterPage/>}/>
+                    <Route path={selectProjectLink()} element={<SelectProjectPage/>}/>
                     <Route path="/:projectId" element={<DashboardPage/>}/>
-                    <Route path="/:projectId/dashboard" element={<DashboardPage/>}/>
-                    <Route path="/:projectId/contracts" element={<ContractsPage/>}/>
-                    <Route path="/:projectId/contracts/create" element={<CreateContractPage updateMode={false}/>}/>
-                    <Route path="/:projectId/contracts/update/:contractId" element={<CreateContractPage updateMode={true}/>}/>
-                    <Route path="/:projectId/contracts/details/:contractId" element={<ContractDetailsPage/>}/>
-                    <Route path="/:projectId/contracts/details/:contractId/invoices/create" element={<CreateInvoicePage updateMode={false}/>}/>
-                    <Route path="/:projectId/contracts/details/:contractId/invoices/update/:invoiceId" element={<CreateInvoicePage updateMode={true}/>}/>
-                    <Route path="/:projectId/contracts/details/:contractId/invoices/details/:invoiceId" element={<InvoiceDetailsPage/>}/>
+                    <Route path={dashboardLink(":projectId")} element={<DashboardPage/>}/>
+                    <Route path={contractsLink(":projectId")} element={<ContractsPage/>}/>
+                    <Route path={createContractLink(":projectId")} element={<CreateContractPage updateMode={false}/>}/>
+                    <Route path={updateContractLink(":projectId", ":contractId")} element={<CreateContractPage updateMode={true}/>}/>
+                    <Route path={contractDetailsLink(":projectId", ":contractId")} element={<ContractDetailsPage/>}/>
+                    <Route path={createInvoiceLink(":projectId", ":contractId")} element={<CreateInvoicePage updateMode={false}/>}/>
+                    <Route path={updateInvoiceLink(":projectId", ":contractId", ":invoiceId")} element={<CreateInvoicePage updateMode={true}/>}/>
+                    <Route path={invoiceDetailsLink(":projectId", ":contractId", ":invoiceId")} element={<InvoiceDetailsPage/>}/>
                     <Route path="/*" element={<NotFoundPage/>}/>
                 </Routes>
             </Router>

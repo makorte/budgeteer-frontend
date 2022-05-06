@@ -4,6 +4,7 @@ import {deleteContract} from "../../services/ContractService";
 import {Table} from "react-bootstrap";
 import {useDispatch} from "react-redux";
 import {setContractsBackDestination} from "../../store/contractsBackSlice";
+import {contractDetailsLink, contractsLink, updateContractLink} from "../../services/NavigationService";
 
 type Props = {
     projectId: string,
@@ -18,8 +19,8 @@ const ContractListComponent = ({projectId, contracts, refetch}: Props) => {
     const onDelete = (i: number) => deleteContract(contracts[i].id!, navigate, projectId, refetch)
 
     const onEdit = (contractId: number) => {
-        dispatch(setContractsBackDestination(`/${projectId}/contracts`))
-        navigate(`/${projectId}/contracts/update/${contractId}`)
+        dispatch(setContractsBackDestination(contractsLink(projectId)))
+        navigate(updateContractLink(projectId, contractId))
     }
 
     return (
@@ -42,7 +43,7 @@ const ContractListComponent = ({projectId, contracts, refetch}: Props) => {
                     <tbody>
                     {contracts.map((contract, index) => (
                         <tr key={index}>
-                            <td><Link to={`/${projectId}/contracts/details/${contract.id}`} className={"link-info"}>{contract.name}</Link>
+                            <td><Link to={contractDetailsLink(projectId, contract.id!)} className={"link-info"}>{contract.name}</Link>
                             </td>
                             <td>{contract.internalNumber}</td>
                             <td>{contract.startDate}</td>
