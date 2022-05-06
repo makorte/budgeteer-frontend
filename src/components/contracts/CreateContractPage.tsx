@@ -63,7 +63,7 @@ const CreateContractPage = ({updateMode}: Props) => {
 
                 <Form onSubmit={handleSubmit(onCreateContract)} className={"bg-white px-4 py-3 shadow rounded-3"}>
                     <Form.Group controlId={"nameGroup"}>
-                        <Form.Label className={"mb-1"}>Name</Form.Label>
+                        <Form.Label className={"mb-1"}>Name*</Form.Label>
                         <Form.Control {...register("name", {
                             required: "Please enter a name!"
                         })} type={"text"} autoFocus/>
@@ -71,7 +71,7 @@ const CreateContractPage = ({updateMode}: Props) => {
                     </Form.Group>
 
                     <FormGroup controlId={"internalNumberGroup"}>
-                        <Form.Label className={"mb-1"}>Id</Form.Label>
+                        <Form.Label className={"mb-1"}>Id*</Form.Label>
                         <Form.Control {...register("internalNumber", {
                             required: "Please enter an id!"
                         })} type={"text"}/>
@@ -79,7 +79,7 @@ const CreateContractPage = ({updateMode}: Props) => {
                     </FormGroup>
 
                     <FormGroup controlId={"startDateGroup"}>
-                        <Form.Label className={"mb-1"}>Start date</Form.Label>
+                        <Form.Label className={"mb-1"}>Start date*</Form.Label>
                         <Form.Control {...register("startDate", {
                             required: "Please select a start date!"
                         })} type={"date"}/>
@@ -87,7 +87,7 @@ const CreateContractPage = ({updateMode}: Props) => {
                     </FormGroup>
 
                     <FormGroup controlId={"typeGroup"}>
-                        <label htmlFor={"type"} className={"mb-1"}>Type</label>
+                        <label htmlFor={"type"} className={"mb-1"}>Type*</label>
                         <select className={"form-control"} {...register("type")} id={"type"}>
                             {contractTypes.map(contractType => <option
                             value={contractType} key={contractType}>{contractType}</option>)}
@@ -95,7 +95,7 @@ const CreateContractPage = ({updateMode}: Props) => {
                     </FormGroup>
 
                     <FormGroup controlId={"budgetGroup"}>
-                        <Form.Label className={"mb-1"}>Budget amount (net)</Form.Label>
+                        <Form.Label className={"mb-1"}>Budget amount (net)*</Form.Label>
                         <Form.Control {...register("budget.amount", {
                             required: "Please enter a budget!"
                         })} type={"text"}/>
@@ -103,7 +103,7 @@ const CreateContractPage = ({updateMode}: Props) => {
                     </FormGroup>
 
                     <FormGroup controlId={"taxRateGroup"}>
-                        <Form.Label className={"mb-1"}>Tax Rate</Form.Label>
+                        <Form.Label className={"mb-1"}>Tax Rate*</Form.Label>
                         <Form.Control {...register("taxRate", {
                             required: "Please enter a tax rate!"
                         })} type={"text"}/>
