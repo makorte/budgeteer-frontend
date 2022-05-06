@@ -1,7 +1,7 @@
 import {useEffect, useState} from "react";
 import http from "../http-common";
 import {useNavigate} from "react-router-dom";
-import {toLogin, toSelectProject} from "./NavigationService";
+import {loginLink, selectProjectLink} from "./NavigationService";
 import {AxiosError} from "axios";
 
 function useGet<T>(url: string, initialData: T, onError: string) {
@@ -35,9 +35,9 @@ function useGet<T>(url: string, initialData: T, onError: string) {
 
     const handleError = (err: AxiosError) => {
         if (err.response?.status === 401) {
-            toLogin(navigate)
+            navigate(loginLink())
         } else if (err.response?.status === 403) {
-            toSelectProject(navigate)
+            navigate(selectProjectLink())
         } else if (err.response?.status === 400 || err.response?.status === 500) {
             navigate(onError)
         } else {

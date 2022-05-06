@@ -8,6 +8,7 @@ import {Button} from "react-bootstrap";
 import {deleteInvoice} from "../../../../services/InvoiceService";
 import {useDispatch} from "react-redux";
 import {setInvoiceBackDestination} from "../../../../store/invoiceBackSlice";
+import {contractDetailsLink, invoiceDetailsLink, updateInvoiceLink} from "../../../../services/NavigationService";
 
 const InvoiceDetailsPage = () => {
     const navigate = useNavigate()
@@ -27,15 +28,13 @@ const InvoiceDetailsPage = () => {
         yearMonth: "",
         paidDate: "",
         dueDate: ""
-    }, `/${projectId}/contracts/details/${contractId}`)
+    }, contractDetailsLink(projectId!, contractId!))
 
-    const onBack = () => {
-        navigate(`/${projectId}/contracts/details/${contractId}`)
-    }
+    const onBack = () => navigate(contractDetailsLink(projectId!, contractId!))
 
     const onEdit = () => {
-        dispatch(setInvoiceBackDestination(`/${projectId}/contracts/details/${contractId}/invoices/details/${invoiceId}`))
-        navigate(`/${projectId}/contracts/details/${contractId}/invoices/update/${invoiceId}`)
+        dispatch(setInvoiceBackDestination(invoiceDetailsLink(projectId!, contractId!, invoiceId!)))
+        navigate(updateInvoiceLink(projectId!, contractId!, invoiceId!))
     }
 
     const onDelete = () => {

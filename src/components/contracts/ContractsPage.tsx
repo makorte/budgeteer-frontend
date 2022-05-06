@@ -6,6 +6,7 @@ import useGet from "../../services/useGet";
 import SpinnerComponent from "../ui/SpinnerComponent";
 import Contract from "../../types/Contract";
 import useDestination from "../../services/useDestination";
+import {createContractLink} from "../../services/NavigationService";
 
 const ContractsPage = () => {
     const {projectId} = useParams()
@@ -24,7 +25,7 @@ const ContractsPage = () => {
                     <ContractListComponent projectId={projectId!} contracts={contracts} refetch={refetch}/>
                 </div>
                 <div className={"text-center"}>
-                    <Button><Link to={`/${projectId}/contracts/create`} className={"text-white td-none"}>Create
+                    <Button><Link to={createContractLink(projectId!)} className={"text-white td-none"}>Create
                         Contract</Link></Button>
                 </div>
             </div>}

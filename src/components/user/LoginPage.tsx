@@ -10,6 +10,7 @@ import {clearLoginInfos, LOGGED_OUT, REGISTERED} from "../../store/loginInfosSli
 import {Alert, Button, Form} from "react-bootstrap";
 
 import "../../custom.scss"
+import {registerLink} from "../../services/NavigationService";
 
 const LoginPage = () => {
     const dispatch = useDispatch()
@@ -59,7 +60,7 @@ const LoginPage = () => {
                 <div className={"d-grid gap-2 text-center mt-4"}>
                     <Button type="submit" className={"text-white"}>Log In</Button>
                     <div>
-                        <Link className={"link-info"} to={"/register"}>Register</Link>
+                        <Link className={"link-info"} to={registerLink()}>Register</Link>
                     </div>
                 </div>
             </Form>

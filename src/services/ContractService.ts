@@ -4,7 +4,7 @@ import CreateContract from "../types/CreateContract";
 import {AxiosError, AxiosResponse} from "axios";
 import {NavigateFunction} from "react-router-dom";
 import {handleError} from "./handleError";
-import {toContract, toContracts} from "./NavigationService";
+import {contractDetailsLink, contractsLink} from "./NavigationService";
 
 export const getContract = (contractId: string, navigate: NavigateFunction, projectId: string): Promise<Contract | void> => {
     return http.get<Contract>(`/contracts/${contractId}`)
@@ -12,7 +12,7 @@ export const getContract = (contractId: string, navigate: NavigateFunction, proj
             return res.data
         })
         .catch((err: AxiosError) => {
-            if (err.response?.status === 400 || err.response?.status === 500) toContracts(navigate, projectId)
+            if (err.response?.status === 400 || err.response?.status === 500) navigate(contractsLink(projectId))
             else handleError(err, navigate)
         })
 }
@@ -21,7 +21,7 @@ export const createContract = (projectId: string, contract: CreateContract, navi
     contract.budget.currencyCode = "EUR"
 
     http.post<Contract>(`/contracts?projectId=${projectId}`, contract)
-        .then((res: AxiosResponse<Contract>) => toContract(navigate, projectId, res.data.id!))
+        .then((res: AxiosResponse<Contract>) => navigate(contractDetailsLink(projectId, res.data.id!)))
         .catch((err: AxiosError) => handleError(err, navigate))
 }
 
@@ -29,7 +29,7 @@ export const updateContract = (contractId: string, contract: CreateContract, nav
     contract.budget.currencyCode = "EUR"
 
     http.put<Contract>(`/contracts/${contractId}`, contract)
-        .then(() => toContract(navigate, projectId, contractId))
+        .then(() => navigate(contractDetailsLink(projectId, contractId)))
         .catch((err: AxiosError) => handleError(err, navigate))
 }
 
@@ -37,7 +37,7 @@ export const deleteContract = (contractId: number, navigate: NavigateFunction, p
     http.delete(`/contracts/${contractId}`)
         .then(() => {
             if (refetch) refetch()
-            toContracts(navigate, projectId)
+            navigate(contractsLink(projectId))
         })
         .catch((err: AxiosError) => handleError(err, navigate))
 }
