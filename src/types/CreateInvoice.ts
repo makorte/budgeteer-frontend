@@ -11,5 +11,5 @@ export default interface CreateInvoice {
     dueDate?: string,
     attributes?: any
 
-    // TODO implement attributes, link, file
+    // TODO #37 implement attributes, link, file
 }

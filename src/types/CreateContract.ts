@@ -11,5 +11,5 @@ export default interface CreateContract {
     }
     taxRate: string
 
-    // TODO include attributes and attachment
+    // TODO #37 include attributes and attachment
 }
