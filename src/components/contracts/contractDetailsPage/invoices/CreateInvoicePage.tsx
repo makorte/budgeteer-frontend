@@ -75,7 +75,7 @@ const CreateInvoicePage = ({updateMode}: Props) => {
                     <Form.Group controlId={"yearMonthGroup"}>
                         <Form.Label className={"mb-1"}>Year and Month*</Form.Label>
                         <Form.Control {...register("yearMonth", {
-                            required: "Please enter a currect value!"
+                            required: "Please enter a correct value!"
                         })} type={"string"} placeholder={"yyyy-mm"}/>
                         <p className={"text-danger"}>{errors.yearMonth?.message}</p>
                     </Form.Group>

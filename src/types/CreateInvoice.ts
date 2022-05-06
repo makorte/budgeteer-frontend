@@ -1,6 +1,5 @@
 export default interface CreateInvoice {
     name: string,
-    contractId?: string,
     amountOwed: {
         currencyCode: string,
         amount: string

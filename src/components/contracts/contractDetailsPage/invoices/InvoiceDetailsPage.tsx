@@ -46,7 +46,7 @@ const InvoiceDetailsPage = () => {
         <>
             <HeaderComponent/>
             <div className={"bg-white p-3 shadow d-flex justify-content-between"}>
-                <h3>{invoice.invoiceName}</h3>
+                <h3>Invoice</h3>
             </div>
             <span onClick={onBack}
                   className={"back-btn m-2 d-inline-flex justify-content-center align-items-center fs-5 td-none"}>
@@ -54,7 +54,7 @@ const InvoiceDetailsPage = () => {
                 Back
             </span>
             {loading ? <SpinnerComponent/> : <div>
-                <div className={"bg-white m-3 p-4"}>
+                <div data-testid={"details-wrapper"} className={"bg-white m-3 p-4"}>
                     <h3>Details</h3>
                     <div className={"mb-2"}>
                         <p className={"my-0"}><b>Name:</b></p>

@@ -51,7 +51,7 @@ const ContractDetailsPage = () => {
         <>
             <HeaderComponent/>
             <div className={"bg-white p-3 shadow d-flex justify-content-between"}>
-                <h3>{contract.name}</h3>
+                <h3>Contract</h3>
             </div>
             {loading ? <SpinnerComponent/> : <div data-testid={"contract-wrapper"}>
                 <div className={"d-flex justify-content-around"}>
