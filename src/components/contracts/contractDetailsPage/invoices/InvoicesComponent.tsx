@@ -21,7 +21,7 @@ const InvoicesComponent = ({projectId, contractId}: Props) => {
     const onDelete = (invoiceId: number) => deleteInvoice(projectId, contractId, invoiceId.toString(), navigate, refetch)
 
     return (
-        <div className="container bg-white contract-invoices m-3 p-4">
+        <div className="col container bg-white m-4 p-4">
             <h2>Invoices</h2>
             {loading ? <SpinnerComponent/> : <div data-testid={"invoices-wrapper"} className="text-center">
                 {invoices.length < 1 ? <p className={"fs-5"}>No invoices exist in this contract!</p> :
@@ -31,7 +31,7 @@ const InvoicesComponent = ({projectId, contractId}: Props) => {
                             <th>Id</th>
                             <th>Name</th>
                             <th>Amount</th>
-                            <th>Year, Month</th>
+                            <th style={{minWidth: "120px"}}>Year, Month</th>
                             <th/>
                             <th/>
                         </tr>

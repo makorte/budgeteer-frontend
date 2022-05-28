@@ -7,6 +7,7 @@ import ContractDetailsPage from "./ContractDetailsPage";
 import {FIXED_PRICE} from "../../../types/Contract";
 import useGet from "../../../services/useGet";
 import {deleteContract} from "../../../services/ContractService";
+import {useParams} from "react-router-dom";
 
 jest.mock("../../../services/useGet", () => {
     return jest.fn()
@@ -15,6 +16,21 @@ jest.mock("../../../services/useGet", () => {
 jest.mock("../../../services/ContractService", () => ({
     deleteContract: jest.fn()
 }))
+
+jest.mock("react-router-dom", () => ({
+    ...jest.requireActual('react-router-dom'),
+    useParams: jest.fn()
+}))
+
+jest.mock("./invoices/InvoicesComponent", () => () => {
+    const InvoicesMock = "invoices-mock";
+    return <InvoicesMock />;
+});
+
+jest.mock("./budgets/BudgetsComponent", () => () => {
+    const BudgetsMock = "budgets-mock";
+    return <BudgetsMock />;
+});
 
 describe("ContractDetailsPage", () => {
     const contract = {
@@ -44,6 +60,11 @@ describe("ContractDetailsPage", () => {
     beforeEach(() => store = createTestStore())
 
     afterEach(() => store = null)
+
+    useParams.mockImplementation(() => ({
+        contractId: contract.id,
+        projectId: contract.projectId
+    }))
 
     test("renders contract if contract is set", async () => {
         useGet.mockImplementation(() => ({
@@ -102,6 +123,6 @@ describe("ContractDetailsPage", () => {
             fireEvent.click(screen.getByText("Delete"))
         })
 
-        expect(deleteContract).toHaveBeenCalledWith(contract.id, expect.anything(), undefined)
+        expect(deleteContract).toHaveBeenCalledWith(contract.id, expect.anything(), contract.projectId)
     })
 })

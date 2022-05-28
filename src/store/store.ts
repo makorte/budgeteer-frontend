@@ -3,12 +3,14 @@ import loginInfosSlice from "./loginInfosSlice";
 import destinationSlice from "./destinationSlice";
 import contractsBackSlice from "./contractsBackSlice";
 import invoiceBackSlice from "./invoiceBackSlice";
+import budgetsBackSlice from "./budgetsBackSlice";
 
 export const rootReducer = combineReducers({
     loginInfos: loginInfosSlice,
     destintaion: destinationSlice,
     contractsBack: contractsBackSlice,
-    invoiceBack: invoiceBackSlice
+    invoiceBack: invoiceBackSlice,
+    budgetsBack: budgetsBackSlice
 })
 
 const store = createStore(

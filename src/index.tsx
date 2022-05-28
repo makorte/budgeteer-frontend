@@ -18,14 +18,17 @@ import NotFoundPage from "./components/ui/NotFoundPage";
 import CreateInvoicePage from "./components/contracts/contractDetailsPage/invoices/CreateInvoicePage";
 import InvoiceDetailsPage from "./components/contracts/contractDetailsPage/invoices/InvoiceDetailsPage";
 import {
+    budgetDetailsLink,
     contractDetailsLink,
-    contractsLink,
+    contractsLink, createBudgetLink,
     createContractLink, createInvoiceLink,
     dashboardLink, invoiceDetailsLink,
     loginLink,
     registerLink,
-    selectProjectLink, updateContractLink, updateInvoiceLink
+    selectProjectLink, updateBudgetLink, updateContractLink, updateInvoiceLink
 } from "./services/NavigationService";
+import CreateBudgetPage from "./components/contracts/contractDetailsPage/budgets/CreateBudgetPage";
+import BudgetDetailsPage from "./components/contracts/contractDetailsPage/budgets/BudgetDetailsPage";
 
 ReactDOM.render(
     <React.StrictMode>
@@ -45,6 +48,9 @@ ReactDOM.render(
                     <Route path={createInvoiceLink(":projectId", ":contractId")} element={<CreateInvoicePage updateMode={false}/>}/>
                     <Route path={updateInvoiceLink(":projectId", ":contractId", ":invoiceId")} element={<CreateInvoicePage updateMode={true}/>}/>
                     <Route path={invoiceDetailsLink(":projectId", ":contractId", ":invoiceId")} element={<InvoiceDetailsPage/>}/>
+                    <Route path={createBudgetLink(":projectId", ":contractId")} element={<CreateBudgetPage updateMode={false}/>}></Route>
+                    <Route path={updateBudgetLink(":projectId", ":contractId", ":budgetId")} element={<CreateBudgetPage updateMode={true}/>}></Route>
+                    <Route path={budgetDetailsLink(":projectId", ":contractId", ":budgetId")} element={<BudgetDetailsPage/>}/>
                     <Route path="/*" element={<NotFoundPage/>}/>
                 </Routes>
             </Router>

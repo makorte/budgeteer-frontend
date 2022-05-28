@@ -45,6 +45,12 @@ describe("InvoiceDetailsPage", () => {
 
     afterEach(() => store = null)
 
+    useParams.mockImplementation(() => ({
+        projectId,
+        contractId,
+        invoiceId: invoice.invoiceId.toString()
+    }))
+
     test("renders only loading spinner if only loading is set", async () => {
         useGet.mockImplementation(() => ({
             data: null,
@@ -91,16 +97,11 @@ describe("InvoiceDetailsPage", () => {
         expect(screen.getByText(invoice.invoiceName)).toBeInTheDocument()
     })
 
-    test("calls deleteContract(...) when delete button clicked", async () => {
+    test("calls deleteInvoice(...) when delete button clicked", async () => {
         useGet.mockImplementation(() => ({
             data: invoice,
             loading: false,
             refetch: jest.fn()
-        }))
-        useParams.mockImplementation(() => ({
-            projectId,
-            contractId,
-            invoiceId: invoice.invoiceId.toString()
         }))
 
         await act(async () => {
