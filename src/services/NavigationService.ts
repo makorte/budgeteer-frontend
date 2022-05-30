@@ -9,3 +9,6 @@ export const updateContractLink = (projectId: string | number, contractId: strin
 export const invoiceDetailsLink = (projectId: string | number, contractId: string | number, invoiceId: string | number) => `${contractDetailsLink(projectId, contractId)}/invoices/details/${invoiceId}`
 export const createInvoiceLink = (projectId: string | number, contractId: string | number) => `${contractDetailsLink(projectId, contractId)}/invoices/create`
 export const updateInvoiceLink = (projectId: string | number, contractId: string | number, invoiceId: string | number) => `${contractDetailsLink(projectId, contractId)}/invoices/update/${invoiceId}`
+export const budgetDetailsLink = (projectId: string | number, contractId: string | number, budgetId: string | number) => `${contractDetailsLink(projectId, contractId)}/bdugets/details/${budgetId}`
+export const createBudgetLink = (projectId: string | number, contractId: string | number) => `${contractDetailsLink(projectId, contractId)}/budgets/create`
+export const updateBudgetLink = (projectId: string | number, contractId: string | number, budgetId: string | number) => `${contractDetailsLink(projectId, contractId)}/budgets/update/${budgetId}`

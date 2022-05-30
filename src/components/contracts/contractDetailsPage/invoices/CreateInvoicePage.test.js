@@ -25,17 +25,17 @@ describe("CreateInvoicePage", () => {
 
     afterEach(() => store = null)
 
+    const projectId = "1"
+    const contractId = "1"
+    const invoiceId = "1"
+
+    useParams.mockImplementation(() => ({
+        projectId,
+        contractId,
+        invoiceId
+    }))
+
     describe("createMode (updateMode=false)", () => {
-        const projectId = "1"
-        const contractId = "1"
-        const invoiceId = "1"
-
-        useParams.mockImplementation(() => ({
-            projectId,
-            contractId,
-            invoiceId
-        }))
-
         test("renders error messages if input fields are empty", async () => {
             await act(async () => {
                 await render(<Provider store={store}><MemoryRouter><CreateInvoicePage
@@ -136,7 +136,7 @@ describe("CreateInvoicePage", () => {
         })
 
         test("calls updateInvoice(...) if values are entered", async () => {
-            const invoice = {
+            const updatedInvoice = {
                 name: "invoice",
                 amountOwed: {
                     amount: "150000"
@@ -150,13 +150,15 @@ describe("CreateInvoicePage", () => {
 
             await act(async () => {
                 await render(<Provider store={store}><MemoryRouter><CreateInvoicePage updateMode={true}/></MemoryRouter></Provider>)
-                fireEvent.change(screen.getByLabelText(/name/i), {target: {value: invoice.name}})
-                fireEvent.change(screen.getByLabelText(/id\*/i), {target: {value: invoice.internalNumber}})
-                fireEvent.change(screen.getByLabelText(/year and month/i), {target: {value: invoice.yearMonth}})
-                fireEvent.change(screen.getByLabelText(/amount/i), {target: {value: invoice.amountOwed.amount}})
-                fireEvent.change(screen.getByLabelText(/tax rate/i), {target: {value: invoice.taxRate}})
+                fireEvent.change(screen.getByLabelText(/name/i), {target: {value: updatedInvoice.name}})
+                fireEvent.change(screen.getByLabelText(/id\*/i), {target: {value: updatedInvoice.internalNumber}})
+                fireEvent.change(screen.getByLabelText(/year and month/i), {target: {value: updatedInvoice.yearMonth}})
+                fireEvent.change(screen.getByLabelText(/amount/i), {target: {value: updatedInvoice.amountOwed.amount}})
+                fireEvent.change(screen.getByLabelText(/tax rate/i), {target: {value: updatedInvoice.taxRate}})
                 fireEvent.click(screen.getByText(/save/i));
             })
+
+            expect(updateInvoice).toHaveBeenCalledWith(projectId, contractId, invoiceId, {...updatedInvoice, amountOwed: {amount: "20000"}}, expect.anything())
         })
     })
 })

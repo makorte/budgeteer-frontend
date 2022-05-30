@@ -12,6 +12,7 @@ import {setContractsBackDestination} from "../../../store/contractsBackSlice";
 import ContractDetailsComponent from "./ContractDetailsComponent";
 import InvoicesComponent from "./invoices/InvoicesComponent";
 import {contractDetailsLink, updateContractLink} from "../../../services/NavigationService";
+import BudgetsComponent from "./budgets/BudgetsComponent";
 
 const ContractDetailsPage = () => {
     const dispatch = useDispatch()
@@ -54,14 +55,17 @@ const ContractDetailsPage = () => {
             <div className={"bg-white p-3 shadow d-flex justify-content-between"}>
                 <h3>Contract</h3>
             </div>
-            {loading ? <SpinnerComponent/> : <div data-testid={"contract-wrapper"}>
-                <div className={"d-flex justify-content-around"}>
+            {loading ? <SpinnerComponent/> : <div className={"container"} data-testid={"contract-wrapper"}>
+                <div className={"row"}>
                     <ContractDetailsComponent contract={contract}/>
                     <InvoicesComponent projectId={projectId!} contractId={contractId!.toString()}/>
+                    <BudgetsComponent contractId={contractId!} projectId={projectId!}/>
                 </div>
-                <div className={"text-center"}>
-                    <Button className={"m-2 text-white td-none"} onClick={onEdit}>Edit</Button>
-                    <Button variant={"danger"} className={"text-white m-2"} onClick={onDelete}>Delete</Button>
+                <div className="row">
+                    <div className="container text-center">
+                        <Button className={"text-white m-2"} onClick={onEdit}>Edit</Button>
+                        <Button variant={"danger"} className={"text-white m-2"} onClick={onDelete}>Delete</Button>
+                    </div>
                 </div>
             </div>}
         </>
