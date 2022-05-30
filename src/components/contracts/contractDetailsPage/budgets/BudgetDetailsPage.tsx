@@ -9,8 +9,10 @@ import SpinnerComponent from "../../../ui/SpinnerComponent";
 import {useDispatch} from "react-redux";
 import {setBudgetsBackDestination} from "../../../../store/budgetsBackSlice";
 import {deleteBudget} from "../../../../services/BudgetService";
+import useDestination from "../../../../services/useDestination";
 
 const BudgetDetailsPage = () => {
+    useDestination()
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const {projectId, contractId, budgetId} = useParams()

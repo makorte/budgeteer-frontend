@@ -8,12 +8,14 @@ import {useDispatch, useSelector} from "react-redux";
 import {RootStore} from "../../../../store/store";
 import {setInvoiceBackDestination} from "../../../../store/invoiceBackSlice";
 import {contractDetailsLink} from "../../../../services/NavigationService";
+import useDestination from "../../../../services/useDestination";
 
 type Props = {
     updateMode: boolean
 }
 
 const CreateInvoicePage = ({updateMode}: Props) => {
+    useDestination()
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const backDestination = useSelector((state: RootStore) => state.invoiceBack.destination)

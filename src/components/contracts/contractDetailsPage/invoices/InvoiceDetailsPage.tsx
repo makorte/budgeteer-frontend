@@ -9,8 +9,10 @@ import {deleteInvoice} from "../../../../services/InvoiceService";
 import {useDispatch} from "react-redux";
 import {setInvoiceBackDestination} from "../../../../store/invoiceBackSlice";
 import {contractDetailsLink, invoiceDetailsLink, updateInvoiceLink} from "../../../../services/NavigationService";
+import useDestination from "../../../../services/useDestination";
 
 const InvoiceDetailsPage = () => {
+    useDestination()
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const {projectId, contractId, invoiceId} = useParams()

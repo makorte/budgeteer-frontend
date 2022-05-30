@@ -8,12 +8,14 @@ import {SubmitHandler, useForm} from "react-hook-form";
 import CreateBudget from "../../../../types/CreateBudget";
 import {createBudget, getBudget, updateBudget} from "../../../../services/BudgetService";
 import {Button, Form} from "react-bootstrap";
+import useDestination from "../../../../services/useDestination";
 
 type Props = {
     updateMode: boolean
 }
 
 const CreateBudgetPage = ({updateMode}: Props) => {
+    useDestination()
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const backDestination = useSelector((state: RootStore) => state.budgetsBack.destination)
