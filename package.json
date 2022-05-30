@@ -58,6 +58,9 @@
     ]
   },
   "jest": {
+    "transform": {
+      "^.+\\.(ts|tsx|js|jsx)$": "ts-jest"
+    },
     "collectCoverageFrom": [
       "src/**/*.{js,jsx,ts,tsx}"
     ],
